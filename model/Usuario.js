@@ -1,0 +1,174 @@
+module.exports = class Usuario {
+    constructor(banco){
+        this._banco = banco;
+        this._id = null;
+        this._p_nome = null;
+        this._sobrenome = null;
+        this._username = null;
+        this._email = null;
+        this._senha = null;
+        this._cidade = null;
+        this._estado = null;
+
+    }
+
+    async create() {
+        
+        const md5 = require("md5");
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            const id = this.getId() 
+            const p_nome = this.getPNome();
+            const sobrenome = this.getSobrenome();
+            const username = this.getUsername();
+            const email = this.getEmail();
+            const senha = md5(this.getSenha());
+            const cidade = this.getCidade();
+            const estado = this.getEstado();
+
+
+            const parametros = [id,p_nome,sobrenome,username,email,senha,cidade,estado];
+
+            let sql = "INSERT INTO `tcc`.`Usuario` (`id`, `p_nome`, `sobrenome`, `username`, `email`, `senha`, `cidade`, `estado`) VALUES (?,?,?,?,?,?,?,?);";
+            this._banco.query(sql, parametros, function (error, result) {
+                if (error) {   
+                    console.log("reject => Usuario.create(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Usuario.create(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+        return operacaoAssincrona;
+    }
+    async read() {
+        
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            
+            const email = this.getEmail();
+            const senha = this.getSenha()
+            let params = [email,senha]
+            let SQL = "";
+
+            
+            if (email == null || senha == null) {
+                SQL = "SELECT id,p_nome,sobrenome,username,email,cidade,estado FROM Usuario ORDER BY email";
+            } if (email != null && senha != null){
+                SQL = "SELECT id,p_nome,sobrenome,username,email,cidade,estado FROM Usuario where email=? and senha = ? ORDER BY email;";
+            }
+
+            this._banco.query(SQL, params, function (error, result) {
+                if (error) {
+                    console.log("reject => Usuario.create(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Usuario.create(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+
+        return operacaoAssincrona;
+    }
+
+    async update() {
+        const md5 = require("md5");
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            const id = this.getId() 
+            const p_nome = this.getPNome();
+            const sobrenome = this.getSobrenome();
+            const username = this.getUsername();
+            const email = this.getEmail();
+            const senha = md5(this.getSenha());
+            const cidade = this.getCidade();
+            const estado = this.getEstado();
+
+
+            const parametros = [p_nome,sobrenome,username,email,senha,cidade,estado,id];
+
+            const sql = "update Usuario set p_nome=?,sobrenome=?,username=?,email=?,senha=?,cidade=?,estado=? where id = ?";
+
+            this._banco.query(sql, parametros, function (error, result) {
+                if (error) {
+                    console.log("reject => Usuario.update(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Usuario.update(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+
+        return operacaoAssincrona;
+    }
+
+    async delete() {
+        //cria uma promise que retornará dados referentes a execução de 
+        //uma instrução sql no banco.
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+
+            const id = this.getId();
+            let parametros = [id];
+            let sql = "delete from Usuario where id = ?";
+            this._banco.query(sql, parametros, function (error, result) {
+                if (error) {
+                    console.log("reject => Usuario.delete(): " + JSON.stringify(error));
+                    reject(error);
+                } else {
+                    console.log("resolve => Usuario.delete(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+        return operacaoAssincrona;
+    }
+
+    setId(id) {
+        this._id = id
+    }
+    getId() {
+        return this._id
+    }
+    setPNome(P_nome) {
+        this._p_nome = P_nome;
+    }
+    getPNome() {
+        return this._p_nome;
+    }
+    setSobrenome(sobrenome) {
+        this._sobrenome = sobrenome;
+    }
+    getSobrenome() {
+        return this._sobrenome;
+    }
+    setUsername(username) {
+        this._username = username;
+    }
+    getUsername() {
+        return this._username;
+    }
+    setEmail(email) {
+        this._email = email;
+    }
+    getEmail() {
+        return this._email;
+    }
+    setSenha(senha) {
+        this._senha = senha;
+    }
+    getSenha() {
+        return this._senha;
+    }
+    setCidade(cidade) {
+        this._cidade = cidade;
+    }
+    getCidade() {
+        return this._cidade;
+    }
+    setEstado(estado) {
+        this._estado = estado;
+    }
+    getEstado() {
+        return this._estado;
+    }
+}

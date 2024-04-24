@@ -1,0 +1,28 @@
+require('dotenv').config()
+const express = require('express')
+const mysql = require('mysql');
+
+const Route_Usuario = require("./router/Route_Usuario")
+
+const app = express()
+app.use(express.static('js'));
+app.use(express.json())
+const banco = mysql.createPool({
+    connectionLimit: 128,
+    host: process.env.host,
+    user: process.env.user,
+    password: process.env.passworld,
+    database: process.env.database});
+
+
+app.get('/helloworld', (req,res) => {
+    return res.json({
+        mensagem: 'Hello World'
+    })
+})
+
+Route_Usuario(app,banco)
+
+app.listen(process.env.PORT ||3000, () => {
+    console.log('connect')
+})
