@@ -1,14 +1,12 @@
-module.exports = class Usuario {
+module.exports = class Doacoes {
     constructor(banco){
         this._banco = banco;
         this._id = null;
-        this._p_nome = null;
-        this._sobrenome = null;
-        this._username = null;
-        this._email = null;
-        this._senha = null;
-        this._cidade = null;
-        this._estado = null;
+        this._id_usuario = null;
+        this._id_instituicao = null;
+        this._produto = null
+        this._data_doacao = null
+        this._trajetoria = null
 
     }
 
@@ -123,91 +121,41 @@ module.exports = class Usuario {
         return operacaoAssincrona;
     }
 
-    async login(){
-        const md5 = require('md5'); 
-        const operacaoAssincrona = new Promise((resolve, reject) => {
-            const email = this.getEmail();
-            const senha = this.getSenha();
-            console.log(email,senha)
-            const parametros = [email, senha];
-            const sql = `SELECT COUNT(*) AS qtd, id,p_nome,sobrenome,email FROM Usuario WHERE email = ? AND senha = ?;`;
-
-            this._banco.query(sql, parametros, (error, result) => {
-
-                if (error) {
-                    console.log(error)
-                    reject(error);
-                } else {
-                   
-                    if (result) {
-                       // console.log(result)
-                        const resposta = {
-                            status: true,
-                            id: result[0].id,
-                            p_nome: result[0].p_nome,
-                            sobrenome: result[0].sobrenome,
-                            email: result[0].email
-                        }
-                        resolve(resposta);
-                    } else {
-                        const resposta = {
-                            status: false,
-                        }
-                        resolve(resposta);
-                    }
-
-                }
-            });
-        });
-        return operacaoAssincrona;
-    }
-
     setId(id) {
         this._id = id
     }
     getId() {
         return this._id
     }
-    setPNome(P_nome) {
-        this._p_nome = P_nome;
+    setIdUsuario(idUsuario){
+        this._id_usuario = idUsuario
     }
-    getPNome() {
-        return this._p_nome;
+    getIdUsuario(){
+        return this._id_usuario
     }
-    setSobrenome(sobrenome) {
-        this._sobrenome = sobrenome;
+    setIdInstituicao(idInstituicao){
+        this._id_instituicao = idInstituicao
     }
-    getSobrenome() {
-        return this._sobrenome;
+    getidInstituicao(){
+        return this._id_instituicao
     }
-    setUsername(username) {
-        this._username = username;
+    setProduto(produto){
+        this._produto = produto
     }
-    getUsername() {
-        return this._username;
+    getproduto(){
+        return this._produto
     }
-    setEmail(email) {
-        this._email = email;
+    setDataDoacao(data){
+        this._data_doacao = data
     }
-    getEmail() {
-        return this._email;
+    getDataDoacao(){
+        return this._data_doacao
     }
-    setSenha(senha) {
-        this._senha = senha;
+    setTrajetoria(trajetoria){
+        this._trajetoria = trajetoria
     }
-    getSenha() {
-        return this._senha;
+    getTrajetoria(){
+        return this._trajetoria
     }
-    setCidade(cidade) {
-        this._cidade = cidade;
-    }
-    getCidade() {
-        return this._cidade;
-    }
-    setEstado(estado) {
-        this._estado = estado;
-    }
-    getEstado() {
-        return this._estado;
-    }
+
 }

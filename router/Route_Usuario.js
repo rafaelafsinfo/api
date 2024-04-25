@@ -1,11 +1,16 @@
 const { request, response } = require('express');
 const Usuario = require('../model/Usuario');
+const cors = require('cors')
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 const {randomUUID} = require('crypto');
 
 module.exports = function(app,banco){
     const Usuario = require('../model/Usuario')
 
-    app.post('/Usuario',(request,response) =>{
+    app.post('/Usuario',cors(corsOptions),(request,response) =>{
         console.log("rota => POST: /Usuario");
         const id = randomUUID()
         const p_nome = request.body.p_nome
@@ -43,7 +48,7 @@ module.exports = function(app,banco){
         }else if(email == ""){
             const resposta={
                 status: true,
-                msg: 'o primeiro nome não pode ser vazio',
+                msg: 'o email não pode ser vazio',
                 codigo: '001',
                 dados: "{}"
             }
@@ -107,7 +112,7 @@ module.exports = function(app,banco){
 
     })
 
-    app.get('/Usuario',(request,response) => {
+    app.get('/Usuario',cors(corsOptions),(request,response) => {
         const usuario = new Usuario(banco)
         usuario.read().then((resultadosBanco) => {
             const resposta = {
@@ -128,34 +133,63 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.get('/Usuario/:email/:senha',(request,response) => {
-        const md5 = require('md5')
-        const email = request.params.email
-        //const senha = request.params.senha
-        const senha = md5(request.params.senha)
-        const usuario = new Usuario(banco)
-        usuario.setEmail(email)
-        usuario.setSenha(senha)
-        let params = [email,senha]
-        usuario.read(params).then((resultadosBanco) => {
+    app.post('/Login/Usuario',cors(corsOptions),(request,response) => {
+        console.log("rota: POST: /login/aluno")
+        const email = request.body.email
+        const senha = request.body.senha
+        if (email == null || senha == "") {
+            //cria um objeto json de resposta.
             const resposta = {
-                status: true,
-                msg: 'Executado com sucesso',
-                dados: resultadosBanco,
+              status: false,
+              msg: 'email ou senha não podem ser vazios',
+              codigo: '001',
+              dados: "{}",
             }
-            response.status(200).send(resposta)
-        }).catch((erro) => {
+            //envia a resposta para o cliente
+            //http code = 200
+            response.status(200).send(resposta);
+      
+          }else{
+
+            const usuario = new Usuario(banco)
+            usuario.setEmail(email)
+            usuario.setSenha(senha)
+            
+
+            usuario.login().then((respostaLogin) => {
+                if (respostaLogin.status == true) { 
+                    console.log(respostaLogin)
+                    const resposta = {
+                    id: respostaLogin.id,
+                    p_nome: respostaLogin.p_nome,
+                    sobrenome: respostaLogin.sobrenome,
+                    email: respostaLogin.email
+                }
+                response.status(200).send(resposta)
+            } else {
+                const resposta = {
+                status: false,
+                msg: "Usuário não logado",
+                codigo: 401,
+                }
+                response.send(resposta, 404)
+            }
+    
+            }).catch((erro) => {
             const resposta = {
                 status: false,
-                codigo: '004',
                 msg: 'erro ao executar',
-                dados: erro
-              }
-              console.error(erro)
-              response.status(200).send(resposta)
-        })
+                codigo: '005',
+                dados: erro,
+            }
+    
+    
+    
+            response.status(201).send(erro);
+            });
+        }
     })
-    app.put('/Usuario/:id',(request,response) => {
+    app.put('/Usuario/:id',cors(corsOptions),(request,response) => {
         const md5 = require('md5')
         const id = request.params.id
         const p_nome = request.body.p_nome
@@ -193,7 +227,7 @@ module.exports = function(app,banco){
         }else if(email == ""){
             const resposta={
                 status: true,
-                msg: 'o primeiro nome não pode ser vazio',
+                msg: 'o email não pode ser vazio',
                 codigo: '001',
                 dados: "{}"
             }
@@ -261,7 +295,7 @@ module.exports = function(app,banco){
         }
     })
 
-    app.delete('/Usuario/:id', (request,response) => {
+    app.delete('/Usuario/:id',cors(corsOptions), (request,response) => {
         const id = request.params.id
         const usuario = new Usuario(banco)
         usuario.setId(id)
