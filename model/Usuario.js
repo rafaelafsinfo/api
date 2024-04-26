@@ -127,7 +127,7 @@ module.exports = class Usuario {
         const md5 = require('md5'); 
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const email = this.getEmail();
-            const senha = this.getSenha();
+            const senha = md5(this.getSenha());
             console.log(email,senha)
             const parametros = [email, senha];
             const sql = `SELECT COUNT(*) AS qtd, id,p_nome,sobrenome,email FROM Usuario WHERE email = ? AND senha = ?;`;

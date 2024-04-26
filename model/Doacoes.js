@@ -15,16 +15,14 @@ module.exports = class Doacoes {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const id = this.getId() 
-            const p_nome = this.getPNome();
-            const sobrenome = this.getSobrenome();
-            const username = this.getUsername();
-            const email = this.getEmail();
-            const senha = md5(this.getSenha());
-            const cidade = this.getCidade();
-            const estado = this.getEstado();
+            const idUsuario = this.getIdUsuario()
+            const idInstituicao = this.getidInstituicao()
+            const produto = this.getproduto()
+            const data = this.getDataDoacao()
+            const trajetoria = this.getTrajetoria()
 
 
-            const parametros = [id,p_nome,sobrenome,username,email,senha,cidade,estado];
+            const parametros = [id,idUsuario,idInstituicao,produto,data,trajetoria];
 
             let sql = "INSERT INTO `tcc`.`Usuario` (`id`, `p_nome`, `sobrenome`, `username`, `email`, `senha`, `cidade`, `estado`) VALUES (?,?,?,?,?,?,?,?);";
             this._banco.query(sql, parametros, function (error, result) {

@@ -46,13 +46,13 @@ module.exports = class Usuario {
                 descricao
             ];
 
-            let sql = "INSERT INTO `tcc`.`Institiocao` (`cnpj`, `nome_inst`, `email`, `senha`, `rua`, `numero`, `bairro`, `cidade`,`estado`,`CEP`,`descricao`) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+            let sql = "INSERT INTO `tcc`.`Instituicao` (`cnpj`, `nome_inst`, `email`, `senha`, `rua`, `numero`, `bairro`, `cidade`,`estado`,`CEP`,`descricao`) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {   
-                    console.log("reject => Institiocao.create(): " + JSON.stringify(error))
+                    console.log("reject => Instituicao.create(): " + JSON.stringify(error))
                     reject(error);
                 } else {
-                    console.log("resolve => Institiocao.create(): " + JSON.stringify(result))
+                    console.log("resolve => Instituicao.create(): " + JSON.stringify(result))
                     resolve(result);
                 }
             });
@@ -153,6 +153,46 @@ module.exports = class Usuario {
             });
         });
         return operacaoAssincrona;
+
+    }
+
+    async login(){
+        const md5 = require('md5'); 
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            const email = this.getEmail();
+            const senha = md5(this.getSenha());
+            console.log(email,senha)
+            const parametros = [email, senha];
+            const sql = `SELECT COUNT(*) AS qtd, cnpj,nome_inst,email,descricao FROM Instituicao WHERE email = ? AND senha = ?;`;
+
+            this._banco.query(sql, parametros, (error, result) => {
+
+                if (error) {
+                    console.log(error)
+                    reject(error);
+                } else {
+                   
+                    if (result) {
+                       // console.log(result)
+                        const resposta = {
+                            status: true,
+                            cnpj: result[0].cnpj,
+                            nome_inst: result[0].nome_inst,
+                            email: result[0].email,
+                            descricao: result[0].descricao
+                        }
+                        resolve(resposta);
+                    } else {
+                        const resposta = {
+                            status: false,
+                        }
+                        resolve(resposta);
+                    }
+
+                }
+            });
+        });
+        return operacaoAssincrona;
     }
 
     setCnpj(cnpj) {
@@ -180,7 +220,7 @@ module.exports = class Usuario {
         return this._senha;
     }
     setRua(Rua) {
-        this._cidade = Rua;
+        this._rua = Rua;
     }
     getRua() {
         return this._rua;

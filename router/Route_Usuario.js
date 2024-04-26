@@ -158,13 +158,12 @@ module.exports = function(app,banco){
 
             usuario.login().then((respostaLogin) => {
                 if (respostaLogin.status == true) { 
-                    console.log(respostaLogin)
                     const resposta = {
-                    id: respostaLogin.id,
-                    p_nome: respostaLogin.p_nome,
-                    sobrenome: respostaLogin.sobrenome,
-                    email: respostaLogin.email
-                }
+                        id: respostaLogin.id,
+                        p_nome: respostaLogin.p_nome,
+                        sobrenome: respostaLogin.sobrenome,
+                        email: respostaLogin.email
+                    }
                 response.status(200).send(resposta)
             } else {
                 const resposta = {
@@ -189,14 +188,13 @@ module.exports = function(app,banco){
             });
         }
     })
-    app.put('/Usuario/:id',cors(corsOptions),(request,response) => {
-        const md5 = require('md5')
-        const id = request.params.id
+    app.put('/Usuario',cors(corsOptions),(request,response) => {
+        const id = request.body.id
         const p_nome = request.body.p_nome
         const sobrenome = request.body.sobrenome
         const username = request.body.username
         const email = request.body.email
-        const senha = md5(request.body.senha)
+        const senha = request.body.senha
         const cidade = request.body.cidade
         const estado = request.body.estado
 

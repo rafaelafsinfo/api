@@ -1,7 +1,13 @@
+const cors = require('cors')
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 module.exports = function(app,banco){
     const Instituicao = require('../model/Instituicao')
 
-    app.post('/Instituicao',(request,response) =>{
+    app.post('/Instituicao',cors(corsOptions),(request,response) =>{
         console.log("rota => POST: /Instituicao");
         const cnpj = request.body.cnpj
         const nome_inst = request.body.nome_inst
@@ -145,7 +151,7 @@ module.exports = function(app,banco){
 
     })
 
-    app.get('/Instituicao',(request,response) => {
+    app.get('/Instituicao',cors(corsOptions),(request,response) => {
         const instituicao = new Instituicao(banco)
         instituicao.read().then((resultadosBanco) => {
             const resposta = {
@@ -166,38 +172,66 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.get('/Instituicao/:email/:senha',(request,response) => {
-        const md5 = require('md5')
-        const email = request.params.email
-        const senha = md5(request.params.senha)
-        const instituicao = new Instituicao(banco)
-        instituicao.setEmail(email)
-        instituicao.setSenha(senha)
-        let params = [email,senha]
-        instituicao.read(params).then((resultadosBanco) => {
+    app.post('/Login/Instituicao',cors(corsOptions),(request,response) => {
+        const email = request.body.email
+        const senha = request.body.senha
+        if (email == null || senha == "") {
+            //cria um objeto json de resposta.
             const resposta = {
-                status: true,
-                msg: 'Executado com sucesso',
-                dados: resultadosBanco,
+              status: false,
+              msg: 'email ou senha não podem ser vazios',
+              codigo: '001',
+              dados: "{}",
             }
-            response.status(200).send(resposta)
-        }).catch((erro) => {
+            //envia a resposta para o cliente
+            //http code = 200
+            response.status(200).send(resposta);
+      
+          }else{
+
+            const instituicao = new Instituicao(banco)
+            instituicao.setEmail(email)
+            instituicao.setSenha(senha)
+            
+
+            instituicao.login().then((respostaLogin) => {
+                if (respostaLogin.status == true) { 
+                    const resposta = {
+                        cnpj: respostaLogin.cnpj,
+                        nome_inst: respostaLogin.nome_inst,
+                        email: respostaLogin.email,
+                        descricao: respostaLogin.descricao
+                    }
+                response.status(200).send(resposta)
+            } else {
+                const resposta = {
+                status: false,
+                msg: "Usuário não logado",
+                codigo: 401,
+                }
+                response.send(resposta, 404)
+            }
+    
+            }).catch((erro) => {
             const resposta = {
                 status: false,
-                codigo: '004',
                 msg: 'erro ao executar',
-                dados: erro
-              }
-              console.error(erro)
-              response.status(200).send(resposta)
-        })
+                codigo: '005',
+                dados: erro,
+            }
+    
+    
+    
+            response.status(201).send(erro);
+            });
+        }
     })
-    app.put('/Instituicao/:id',(request,response) => {
+    app.put('/Instituicao/',cors(corsOptions),(request,response) => {
         const md5 = require('md5')
-        const cnpj = request.params.id
+        const cnpj = request.body.cnpj
         const nome_inst = request.body.nome_inst
         const email = request.body.email
-        const senha = md5(request.body.senha)
+        const senha = request.body.senha
         const rua = request.body.rua
         const numero = request.body.numero
         const bairro = request.body.bairro
@@ -340,8 +374,8 @@ module.exports = function(app,banco){
         }
     })
 
-    app.delete('/Instituicap/:id', (request,response) => {
-        const cnpj = request.params.id
+    app.delete('/Instituicao/',cors(corsOptions),(request,response) => {
+        const cnpj = request.body.cnpj
         const instituicao = new Instituicao(banco)
         instituicao.setCnpj(cnpj)
         instituicao.delete().then((resultadosBanco) =>{
