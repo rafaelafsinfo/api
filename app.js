@@ -3,8 +3,9 @@ const express = require('express')
 const cors = require('cors')
 const mysql = require('mysql');
 
-const Route_Usuario = require("./router/Route_Usuario")
+const Route_Doacoes = require("./router/Route_Doacoes")
 const Route_Instituicao = require("./router/Route_Instituicao")
+const Route_Usuario = require("./router/Route_Usuario")
 
 const app = express()
 app.use(express.static('js'));
@@ -27,8 +28,9 @@ app.get('/helloworld', cors(corsOptions) ,(req,res) => {
     })
 })
 
-Route_Usuario(app,banco)
+Route_Doacoes(app,banco)
 Route_Instituicao(app,banco)
+Route_Usuario(app,banco)
 
 app.listen(process.env.PORT ||3000, () => {
     console.log('connect')

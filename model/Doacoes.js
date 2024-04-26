@@ -24,13 +24,13 @@ module.exports = class Doacoes {
 
             const parametros = [id,idUsuario,idInstituicao,produto,data,trajetoria];
 
-            let sql = "INSERT INTO `tcc`.`Usuario` (`id`, `p_nome`, `sobrenome`, `username`, `email`, `senha`, `cidade`, `estado`) VALUES (?,?,?,?,?,?,?,?);";
+            let sql = "INSERT INTO `tcc`.`Doacoes` (`id`, `id_usuario`, `id_instituicao`, `produto`, `data_doacao`, `trajetoria`) VALUES (?,?,?,?,?,?);";
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {   
-                    console.log("reject => Usuario.create(): " + JSON.stringify(error))
+                    console.log("reject => Doacoes.create(): " + JSON.stringify(error))
                     reject(error);
                 } else {
-                    console.log("resolve => Usuario.create(): " + JSON.stringify(result))
+                    console.log("resolve => Doacoes.create(): " + JSON.stringify(result))
                     resolve(result);
                 }
             });
@@ -41,24 +41,23 @@ module.exports = class Doacoes {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const email = this.getEmail();
-            const senha = this.getSenha()
-            let params = [email,senha]
+            const id = this.getId();
+            let params = [id]
             let SQL = "";
 
             
-            if (email == null || senha == null) {
-                SQL = "SELECT id,p_nome,sobrenome,username,email,cidade,estado FROM Usuario ORDER BY email";
-            } if (email != null && senha != null){
-                SQL = "SELECT id,p_nome,sobrenome,username,email,cidade,estado FROM Usuario where email=? and senha = ? ORDER BY email;";
+            if (id == null) {
+                SQL = "SELECT id,id_usuario,id_instituicao,produto,data_doacao,trajetoria FROM Doacoes ORDER BY id";
+            } if (id != null){
+                SQL = "SELECT id,id_usuario,id_instituicao,produto,data_doacao,trajetoria FROM Doacoes where id=? ORDER BY id;";
             }
 
             this._banco.query(SQL, params, function (error, result) {
                 if (error) {
-                    console.log("reject => Usuario.create(): " + JSON.stringify(error))
+                    console.log("reject => Doacoes.Read(): " + JSON.stringify(error))
                     reject(error);
                 } else {
-                    console.log("resolve => Usuario.create(): " + JSON.stringify(result))
+                    console.log("resolve => Doacoes.Read(): " + JSON.stringify(result))
                     resolve(result);
                 }
             });
@@ -71,25 +70,23 @@ module.exports = class Doacoes {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const id = this.getId() 
-            const p_nome = this.getPNome();
-            const sobrenome = this.getSobrenome();
-            const username = this.getUsername();
-            const email = this.getEmail();
-            const senha = md5(this.getSenha());
-            const cidade = this.getCidade();
-            const estado = this.getEstado();
+            const idUsuario = this.getIdUsuario()
+            const idInstituicao = this.getidInstituicao()
+            const produto = this.getproduto()
+            const data = this.getDataDoacao()
+            const trajetoria = this.getTrajetoria()
 
 
-            const parametros = [p_nome,sobrenome,username,email,senha,cidade,estado,id];
+            const parametros = [idUsuario,idInstituicao,produto,data,trajetoria,id];
 
-            const sql = "update Usuario set p_nome=?,sobrenome=?,username=?,email=?,senha=?,cidade=?,estado=? where id = ?";
+            const sql = "update Doacoes set id_usuario=?,id_instituicao=?,produto=?,data_doacao=?,trajetoria=? where id = ?";
 
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {
-                    console.log("reject => Usuario.update(): " + JSON.stringify(error))
+                    console.log("reject => Doacoes.update(): " + JSON.stringify(error))
                     reject(error);
                 } else {
-                    console.log("resolve => Usuario.update(): " + JSON.stringify(result))
+                    console.log("resolve => Doacoes.update(): " + JSON.stringify(result))
                     resolve(result);
                 }
             });
@@ -105,13 +102,13 @@ module.exports = class Doacoes {
 
             const id = this.getId();
             let parametros = [id];
-            let sql = "delete from Usuario where id = ?";
+            let sql = "delete from Doacoes where id = ?"; 
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {
-                    console.log("reject => Usuario.delete(): " + JSON.stringify(error));
+                    console.log("reject => Doacoes.delete(): " + JSON.stringify(error));
                     reject(error);
                 } else {
-                    console.log("resolve => Usuario.delete(): " + JSON.stringify(result))
+                    console.log("resolve => Doacoes.delete(): " + JSON.stringify(result))
                     resolve(result);
                 }
             });
