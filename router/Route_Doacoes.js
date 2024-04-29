@@ -82,7 +82,7 @@ module.exports = function(app,banco){
                     dados: {
                         id: resultadosBanco.id,
                         id_usuario: doacoes.getIdUsuario(),
-                        id_institucao: doacoes.getidInstituicao(),
+                        id_institucao: doacoes.getidInstituicao()||"null",
                         produto: doacoes.getproduto(),
                         data: doacoes.getDataDoacao(),
                         trajetoria: doacoes.getTrajetoria()
