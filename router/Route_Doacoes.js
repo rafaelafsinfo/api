@@ -1,14 +1,9 @@
-const cors = require('cors')
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
 const {randomUUID} = require('crypto');
 
 module.exports = function(app,banco){
     const Doacoes = require('../model/Doacoes');
 
-    app.post('/Doacoes',cors(corsOptions),(request,response) =>{
+    app.post('/Doacoes',(request,response) =>{
         console.log("rota => POST: /Doacoes");
         const id = randomUUID()
         const id_usuario = request.body.id_usuario
@@ -97,7 +92,7 @@ module.exports = function(app,banco){
 
     })
 
-    app.get('/Doacoes',cors(corsOptions),(request,response) => {
+    app.get('/Doacoes',(request,response) => {
         const doacoes = new Doacoes(banco)
         doacoes.read().then((resultadosBanco) => {
             const resposta = {
@@ -118,7 +113,7 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.put('/Doacoes',cors(corsOptions),(request,response) => {
+    app.put('/Doacoes',(request,response) => {
         const id = request.body.id
         const id_usuario = request.body.id_usuario
         const id_institucao = request.body.id_instituicao
@@ -211,7 +206,7 @@ module.exports = function(app,banco){
         }
     })
 
-    app.delete('/Doacoes/:id',cors(corsOptions), (request,response) => {
+    app.delete('/Doacoes/:id', (request,response) => {
         const id = request.params.id
         const doacoes = new Doacoes(banco)
         doacoes.setId(id)
