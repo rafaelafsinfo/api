@@ -22,7 +22,7 @@ const banco = mysql.createPool({
     database: process.env.database});
 
 
-app.get('/helloworld', cors(corsOptions) ,(req,res) => {
+app.get('/helloworld',(req,res) => {
     return res.json({
         mensagem: 'Hello World'
     })
