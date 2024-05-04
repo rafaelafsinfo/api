@@ -140,7 +140,7 @@ module.exports = class Usuario {
                 } else {
                    
                     if (result) {
-                       // console.log(result)
+                       console.log(result)
                         const resposta = {
                             status: true,
                             id: result[0].id,
