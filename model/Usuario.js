@@ -133,6 +133,7 @@ module.exports = class Usuario {
             const sql = `SELECT COUNT(*) AS qtd, id,p_nome,sobrenome,email FROM Usuario WHERE email = ? AND senha = ?;`;
 
             this._banco.query(sql, parametros, (error, result) => {
+                console.log(result)
 
                 if (error) {
                     console.log(error)
@@ -140,7 +141,6 @@ module.exports = class Usuario {
                 } else {
                    
                     if (result.qtd > 0) {
-                       console.log(result)
                         const resposta = {
                             status: true,
                             id: result[0].id,
