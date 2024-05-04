@@ -163,7 +163,8 @@ module.exports = function(app,banco){
                         id: respostaLogin.id,
                         p_nome: respostaLogin.p_nome,
                         sobrenome: respostaLogin.sobrenome,
-                        email: respostaLogin.email
+                        email: respostaLogin.email,
+                        mensagem: 'login realizado com sucesso'
                     }
                     response.status(200).send(resposta)
             } else {
