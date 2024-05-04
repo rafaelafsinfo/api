@@ -157,6 +157,7 @@ module.exports = function(app,banco){
             
 
             usuario.login().then((respostaLogin) => {
+                console.log(respostaLogin.status)
                 if (respostaLogin.status == true) { 
                     const resposta = {
                         id: respostaLogin.id,
@@ -164,7 +165,6 @@ module.exports = function(app,banco){
                         sobrenome: respostaLogin.sobrenome,
                         email: respostaLogin.email
                     }
-                    console.log(respostaLogin.status)
                     response.status(200).send(resposta)
             } else {
                 const resposta = {
