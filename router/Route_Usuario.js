@@ -164,7 +164,7 @@ module.exports = function(app,banco){
                         sobrenome: respostaLogin.sobrenome,
                         email: respostaLogin.email
                     }
-                    console.log(resposta)
+                    console.log(respostaLogin.status)
                     response.status(200).send(resposta)
             } else {
                 const resposta = {
