@@ -173,7 +173,7 @@ module.exports = function(app,banco){
                 codigo: 401,
                 }
                 console.log(resposta)
-                response.send(resposta, 404)
+                response.status(404).send(resposta)
             }
             }).catch((erro) => {
             const resposta = {
