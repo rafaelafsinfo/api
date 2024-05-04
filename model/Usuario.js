@@ -140,7 +140,7 @@ module.exports = class Usuario {
                     reject(error);
                 } else {
                    
-                    if (result.qtd > 0) {
+                    if (result) {
                         const resposta = {
                             status: true,
                             id: result[0].id,
