@@ -164,16 +164,17 @@ module.exports = function(app,banco){
                         sobrenome: respostaLogin.sobrenome,
                         email: respostaLogin.email
                     }
-                response.status(200).send(resposta)
+                    console.log(resposta)
+                    response.status(200).send(resposta)
             } else {
                 const resposta = {
                 status: false,
                 msg: "Usuário não logado",
                 codigo: 401,
                 }
+                console.log(resposta)
                 response.send(resposta, 404)
             }
-    
             }).catch((erro) => {
             const resposta = {
                 status: false,
