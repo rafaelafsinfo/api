@@ -172,6 +172,29 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
+    app.get('/Instituicao/:cnpj',cors(corsOptions),(request,response) => {
+        const cnpj = request.params.cnpj
+        const instituicao = new Instituicao(banco)
+        instituicao.setCnpj(cnpj)
+        instituicao.read(cnpj).then((resultadosBanco) => {
+            const resposta = {
+                status: true,
+                msg: 'Executado com sucesso',
+                dados: resultadosBanco,
+                codigo: '003'
+            }
+            response.status(200).send(resposta)
+        }).catch((erro) => {
+            const resposta = {
+                status: false,
+                codigo: '004',
+                msg: 'erro ao executar',
+                dados: erro
+              }
+              console.error(erro)
+              response.status(200).send(resposta)
+        })
+    })
     app.post('/Login/Instituicao',cors(corsOptions),(request,response) => {
         const email = request.body.email
         const senha = request.body.senha
