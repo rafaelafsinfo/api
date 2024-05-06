@@ -172,8 +172,8 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.get('/Instituicao/:cnpj',cors(corsOptions),(request,response) => {
-        const cnpj = request.params.cnpj
+    app.get('/Instituicao/',cors(corsOptions),(request,response) => {
+        const cnpj = request.body.cnpj
         const instituicao = new Instituicao(banco)
         instituicao.setCnpj(cnpj)
         instituicao.read(cnpj).then((resultadosBanco) => {
