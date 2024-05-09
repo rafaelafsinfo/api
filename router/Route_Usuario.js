@@ -1,16 +1,12 @@
 const { request, response } = require('express');
 const Usuario = require('../model/Usuario');
-const cors = require('cors')
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+
 const {randomUUID} = require('crypto');
 
 module.exports = function(app,banco){
     const Usuario = require('../model/Usuario')
 
-    app.post('/Usuario',cors(corsOptions),(request,response) =>{
+    app.post('/Usuario',(request,response) =>{
         console.log("rota => POST: /Usuario");
         const id = randomUUID()
         const p_nome = request.body.p_nome
@@ -112,7 +108,7 @@ module.exports = function(app,banco){
 
     })
 
-    app.get('/Usuario',cors(corsOptions),(request,response) => {
+    app.get('/Usuario',(request,response) => {
         const usuario = new Usuario(banco)
         usuario.read().then((resultadosBanco) => {
             const resposta = {
@@ -133,7 +129,7 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.post('/Login/Usuario',cors(corsOptions),(request,response) => {
+    app.post('/Login/Usuario',(request,response) => {
         console.log("rota: POST: /login/aluno")
         const email = request.body.email
         const senha = request.body.senha
@@ -190,7 +186,7 @@ module.exports = function(app,banco){
             });
         }
     })
-    app.put('/Usuario',cors(corsOptions),(request,response) => {
+    app.put('/Usuario',(request,response) => {
         const id = request.body.id
         const p_nome = request.body.p_nome
         const sobrenome = request.body.sobrenome
@@ -295,7 +291,7 @@ module.exports = function(app,banco){
         }
     })
 
-    app.delete('/Usuario/:id',cors(corsOptions), (request,response) => {
+    app.delete('/Usuario/:id', (request,response) => {
         const id = request.params.id
         const usuario = new Usuario(banco)
         usuario.setId(id)

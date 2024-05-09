@@ -1,13 +1,9 @@
-const cors = require('cors')
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+
 
 module.exports = function(app,banco){
     const Instituicao = require('../model/Instituicao')
 
-    app.post('/Instituicao',cors(corsOptions),(request,response) =>{
+    app.post('/Instituicao',(request,response) =>{
         console.log("rota => POST: /Instituicao");
         const cnpj = request.body.cnpj
         const nome_inst = request.body.nome_inst
@@ -151,7 +147,7 @@ module.exports = function(app,banco){
 
     })
 
-    app.get('/Instituicao',cors(corsOptions),(request,response) => {
+    app.get('/Instituicao',(request,response) => {
         const instituicao = new Instituicao(banco)
         instituicao.read().then((resultadosBanco) => {
             const resposta = {
@@ -172,7 +168,7 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.get('/Instituicao/cnpj',cors(corsOptions),(request,response) => {
+    app.get('/Instituicao/cnpj',(request,response) => {
         const cnpj = request.body.cnpj
         const instituicao = new Instituicao(banco)
         instituicao.setCnpj(cnpj)
@@ -195,7 +191,7 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.post('/Login/Instituicao',cors(corsOptions),(request,response) => {
+    app.post('/Login/Instituicao',(request,response) => {
         const email = request.body.email
         const senha = request.body.senha
         if (email == null || senha == "") {
@@ -249,7 +245,7 @@ module.exports = function(app,banco){
             });
         }
     })
-    app.put('/Instituicao/',cors(corsOptions),(request,response) => {
+    app.put('/Instituicao/',(request,response) => {
         const md5 = require('md5')
         const cnpj = request.body.cnpj
         const nome_inst = request.body.nome_inst
@@ -397,7 +393,7 @@ module.exports = function(app,banco){
         }
     })
 
-    app.delete('/Instituicao/',cors(corsOptions),(request,response) => {
+    app.delete('/Instituicao/',(request,response) => {
         const cnpj = request.body.cnpj
         const instituicao = new Instituicao(banco)
         instituicao.setCnpj(cnpj)

@@ -10,10 +10,7 @@ const Route_Usuario = require("./router/Route_Usuario")
 const app = express()
 app.use(express.static('js'));
 app.use(express.json())
-var corsOptions = {
-    origin: '*',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+
 const banco = mysql.createPool({
     connectionLimit: 128,
     host: process.env.host,
@@ -22,7 +19,7 @@ const banco = mysql.createPool({
     database: process.env.database});
 
 
-app.get('/helloworld', cors(corsOptions) ,(req,res) => {
+app.get('/helloworld' ,(req,res) => {
     return res.json({
         mensagem: 'Hello World'
     })
