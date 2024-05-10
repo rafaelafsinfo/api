@@ -168,11 +168,11 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.get('/Instituicao/cnpj',(request,response) => {
-        const cnpj = request.body.cnpj
+    app.get('/Instituicao/:email',(request,response) => {
+        const email = request.params.email
         const instituicao = new Instituicao(banco)
-        instituicao.setCnpj(cnpj)
-        instituicao.read(cnpj).then((resultadosBanco) => {
+        instituicao.setEmail(email)
+        instituicao.read(email).then((resultadosBanco) => {
             const resposta = {
                 status: true,
                 msg: 'Executado com sucesso',

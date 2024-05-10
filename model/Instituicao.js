@@ -63,15 +63,15 @@ module.exports = class Instituicao {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const cnpj = this.getCnpj();
-            let params = [cnpj]
+            const email = this.getCnpj();
+            let params = [email]
             let SQL = "";
 
             
-            if (cnpj == null) {
+            if (email == null) {
                 SQL = "SELECT cnpj,nome_inst,email,rua,numero,bairro,cidade,estado,CEP,descricao FROM Instituicao ORDER BY email";
-            } if (cnpj != null){
-                SQL = "SELECT cnpj,nome_inst,email,rua,numero,bairro,cidade,estado,CEP,descricao FROM Instituicao where cnpj=? ORDER BY email;";
+            } if (email != null){
+                SQL = "SELECT cnpj,nome_inst,email,rua,numero,bairro,cidade,estado,CEP,descricao FROM Instituicao where email=? ORDER BY email;";
             }
 
             this._banco.query(SQL, params, function (error, result) {

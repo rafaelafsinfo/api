@@ -117,7 +117,7 @@ module.exports = function(app,banco){
         const doacoes = new Doacoes(banco)
         const id = request.params.id
         doacoes.setId(id)
-        doacoes.read().then((resultadosBanco) => {
+        doacoes.read(id).then((resultadosBanco) => {
             const resposta = {
                 status: true,
                 msg: 'Executado com sucesso',

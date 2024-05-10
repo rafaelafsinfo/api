@@ -129,6 +129,29 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
+    app.get('/Usuario/:email',(request,response) => {
+        const usuario = new Usuario(banco)
+        const email = request.params.email
+        usuario.setEmail(email)
+        usuario.read(email).then((resultadosBanco) => {
+            const resposta = {
+                status: true,
+                msg: 'Executado com sucesso',
+                dados: resultadosBanco,
+                codigo: '003'
+            }
+            response.status(200).send(resposta)
+        }).catch((erro) => {
+            const resposta = {
+                status: false,
+                codigo: '004',
+                msg: 'erro ao executar',
+                dados: erro
+              }
+              console.error(erro)
+              response.status(200).send(resposta)
+        })
+    })
     app.post('/Login/Usuario',(request,response) => {
         console.log("rota: POST: /login/aluno")
         const email = request.body.email

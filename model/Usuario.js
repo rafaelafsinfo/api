@@ -46,15 +46,14 @@ module.exports = class Usuario {
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
             const email = this.getEmail();
-            const senha = this.getSenha()
-            let params = [email,senha]
+            let params = [email]
             let SQL = "";
 
             
-            if (email == null || senha == null) {
+            if (email == null) {
                 SQL = "SELECT id,p_nome,sobrenome,username,email,cidade,estado FROM Usuario ORDER BY email";
-            } if (email != null && senha != null){
-                SQL = "SELECT id,p_nome,sobrenome,username,email,cidade,estado FROM Usuario where email=? and senha = ? ORDER BY email;";
+            } if (email != null){
+                SQL = "SELECT id,p_nome,sobrenome,username,email,cidade,estado FROM Usuario where email=? ORDER BY email;";
             }
 
             this._banco.query(SQL, params, function (error, result) {
