@@ -10,6 +10,9 @@ const Route_Usuario = require("./router/Route_Usuario")
 const app = express()
 app.use(express.static('js'));
 app.use(express.json())
+app.use(cors({
+    origin: '*'
+  }))
 
 const banco = mysql.createPool({
     connectionLimit: 128,
