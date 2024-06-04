@@ -12,19 +12,18 @@ module.exports = class Doacoes {
 
     async create() {
         
-        const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const id = this.getId() 
             const idUsuario = this.getIdUsuario()
             const idInstituicao = this.getidInstituicao()
             const produto = this.getproduto()
             const data = this.getDataDoacao()
-            const trajetoria = this.getTrajetoria()
+            
 
 
-            const parametros = [id,idUsuario,idInstituicao,produto,data,trajetoria];
+            const parametros = [id,idUsuario,idInstituicao,produto,data];
 
-            let sql = "INSERT INTO `tcc`.`Doacoes` (`id`, `id_usuario`, `id_instituicao`, `produto`, `data_doacao`, `trajetoria`) VALUES (?,?,?,?,?,?);";
+            let sql = "INSERT INTO `tcc`.`Doacoes` (`id`, `id_usuario`, `id_instituicao`, `produto`, `data_doacao`, `trajetoria`) VALUES (?,?,?,?,?,0);";
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {   
                     console.log("reject => Doacoes.create(): " + JSON.stringify(error))
@@ -67,7 +66,6 @@ module.exports = class Doacoes {
     }
 
     async update() {
-        const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const id = this.getId() 
             const idUsuario = this.getIdUsuario()
