@@ -44,14 +44,14 @@ module.exports = class locais {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const id = this.getId();
-            let params = [id]
+            const cpf = this.getCep();
+            let params = [cpf]
             let SQL = "";
 
             
-            if (id == null) {
+            if (cpf == null) {
                 SQL = "SELECT id,cep,estado,cidade,bairro,rua,complemento FROM locais ORDER BY cep";
-            } if (id != null){
+            } if (cpf != null){
                 SQL = "SELECT id,cep,estado,cidade,bairro,rua,complemento FROM locais where cep=? ORDER BY cep;";
             }
 
