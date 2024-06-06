@@ -68,7 +68,7 @@ module.exports = function(app,banco){
             locais.setEstado(estado)
             locais.setCidade(cidade)
             locais.setbairro(bairro)
-            locais.setrua(rua)
+            locais.setRua(rua)
             locais.setComplemento(complemento)
 
             locais.create().then((resultadosBanco) => {
