@@ -152,7 +152,62 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.post('/Login/Usuario',usercontroler.login)
+    app.post('/Login/Usuario',(request,response) => {
+        console.log("rota: POST: /login/aluno")
+        const email = request.body.email
+        const senha = request.body.senha
+        if (email == null || senha == "") {
+            //cria um objeto json de resposta.
+            const resposta = {
+              status: false,
+              msg: 'email ou senha não podem ser vazios',
+              codigo: '001',
+              dados: "{}",
+            }
+            //envia a resposta para o cliente
+            //http code = 200
+            response.status(200).send(resposta);
+
+          }else{
+
+            const usuario = new Usuario(banco)
+            usuario.setEmail(email)
+            usuario.setSenha(senha)
+
+
+            usuario.login().then((respostaLogin) => {
+                console.log(respostaLogin.status)
+                if (respostaLogin.status == true) { 
+                    const resposta = {
+                        id: respostaLogin.id,
+                        p_nome: respostaLogin.p_nome,
+                        sobrenome: respostaLogin.sobrenome,
+                        email: respostaLogin.email,
+                        mensagem: 'login realizado com sucesso'
+                    }
+                    response.status(200).send(resposta)
+            } else {
+                const resposta = {
+                status: false,
+                msg: "Usuário não logado",
+                codigo: 401,
+                }
+                console.log(resposta)
+                response.status(404).send(resposta)
+            }
+            }).catch((erro) => {
+            const resposta = {
+                status: false,
+                msg: 'erro ao executar',
+                codigo: '005',
+                dados: erro,
+            }
+
+
+            response.status(201).send(erro);
+            });
+        }
+    })
     
     app.put('/Usuario',(request,response) => {
         const id = request.body.id
