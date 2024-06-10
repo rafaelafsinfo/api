@@ -1,6 +1,5 @@
 const { request, response } = require('express');
 const Usuario = require('../model/Usuario');
-const usercontroler = require('../auth/usercontroler')
 const {randomUUID} = require('crypto');
 
 module.exports = function(app,banco){
@@ -183,6 +182,7 @@ module.exports = function(app,banco){
                         p_nome: respostaLogin.p_nome,
                         sobrenome: respostaLogin.sobrenome,
                         email: respostaLogin.email,
+                        token: respostaLogin.token,
                         mensagem: 'login realizado com sucesso'
                     }
                     response.status(200).send(resposta)

@@ -123,6 +123,9 @@ module.exports = class Usuario {
     }
 
     async login(){
+        const dotenv = require('dotenv')
+        const jose = require('jose')
+        const {createSecretKey} = require('crypto')
         const md5 = require('md5'); 
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const email = this.getEmail();
@@ -132,6 +135,8 @@ module.exports = class Usuario {
             const sql = `SELECT COUNT(*) AS qtd, id,p_nome,sobrenome,email FROM Usuario WHERE email = ? AND senha = ?;`;
 
             this._banco.query(sql, parametros, (error, result) => {
+
+                
                 console.log(result)
 
                 if (error) {
@@ -140,12 +145,33 @@ module.exports = class Usuario {
                 } else {
                    
                     if (result[0].qtd > 0) {
+                        const payload = {
+                            email: email,
+                            senha: senha,
+                        }
+
+                        const secret = new TextEncoder().encode(
+                            process.env.passworld,
+                        )
+                        const alg = 'HS256'
+                    
+                        const token = new jose.SignJWT({ 'urn:example:claim': true })
+                        .setProtectedHeader({ alg })
+                        .setIssuedAt()
+                        .setIssuer('urn:example:issuer')
+                        .setAudience('urn:example:audience')
+                        .setExpirationTime('2h')
+                        .sign(secret)
+
+                        
+
                         const resposta = {
                             status: true,
                             id: result[0].id,
                             p_nome: result[0].p_nome,
                             sobrenome: result[0].sobrenome,
-                            email: result[0].email
+                            email: result[0].email,
+                            token: token
                         }
                         resolve(resposta);
                     } else {
