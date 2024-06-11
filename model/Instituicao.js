@@ -63,7 +63,7 @@ module.exports = class Instituicao {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const email = this.getCnpj();
+            const email = this.getEmail();
             let params = [email]
             let SQL = "";
 
