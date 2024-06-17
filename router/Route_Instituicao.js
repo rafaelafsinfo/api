@@ -246,11 +246,10 @@ module.exports = function(app,banco){
         }
     })
 
-    app.patch('/Instituicao/', (request, response) => {
-        const md5 = require('md5')
+    app.patch('/Instituicao/:cnpj', (request, response) => {
+        const md5 = require('md5');
         const partialData = {};
-      
-        if (request.body.cnpj) partialData.cnpj = request.body.cnpj;
+    
         if (request.body.nome_inst) partialData.nome_inst = request.body.nome_inst;
         if (request.body.email) partialData.email = request.body.email;
         if (request.body.senha) partialData.senha = md5(request.body.senha);
@@ -261,53 +260,53 @@ module.exports = function(app,banco){
         if (request.body.estado) partialData.estado = request.body.estado;
         if (request.body.CEP) partialData.CEP = request.body.CEP;
         if (request.body.descricao) partialData.descricao = request.body.descricao;
-      
+    
         const instituicao = new Instituicao(banco);
-      
+    
         if (Object.keys(partialData).length === 0) {
-          const resposta = {
-            status: true,
-            msg: 'Nenhum campo foi alterado',
-            codigo: '001',
-            dados: "{}"
-          }
-          response.status(200).send(resposta);
+            const resposta = {
+                status: true,
+                msg: 'Nenhum campo foi alterado',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
         } else {
             for (const key in partialData) {
-                instituicao[key] = partialData[key];
-              }
-      
-          instituicao.partialupdate(partialData).then((resultadosBanco) => {
-            const resposta = {
-              status: true,
-              msg: 'Executado com sucesso',
-              codigo: '002',
-              dados: {
-                cnpj: resultadosBanco.cnpj,
-                nome_inst: instituicao.getNomeInst(),
-                email: instituicao.getEmail(),
-                rua: instituicao.getRua(),
-                numero: instituicao.getNumero(),
-                bairro: instituicao.getBairro(),
-                cidade: instituicao.getCidade(),
-                estado: instituicao.getEstado(),
-                CEP: instituicao.getCEP(),
-                descricao: instituicao.getDescricao()
-              },
+                instituicao[`set${key}`](partialData[key]);
             }
-            response.status(200).send(resposta)
-          }).catch((erro) => {
-            const resposta = {
-              status: false,
-              msg: 'erro ao executar',
-              codigo: '010',
-              dados: erro,
-            }
-            console.error(erro)
-            response.status(200).send(resposta);
-          })
+    
+            instituicao.partialupdate(partialData).then((resultadosBanco) => {
+                const resposta = {
+                    status: true,
+                    msg: 'Executado com sucesso',
+                    codigo: '002',
+                    dados: {
+                        cnpj: resultadosBanco.cnpj,
+                        nome_inst: instituicao.getNomeInst(),
+                        email: instituicao.getEmail(),
+                        rua: instituicao.getRua(),
+                        numero: instituicao.getNumero(),
+                        bairro: instituicao.getBairro(),
+                        cidade: instituicao.getCidade(),
+                        estado: instituicao.getEstado(),
+                        CEP: instituicao.getCEP(),
+                        descricao: instituicao.getDescricao()
+                    },
+                }
+                response.status(200).send(resposta)
+            }).catch((erro) => {
+                const resposta = {
+                    status: false,
+                    msg: 'erro ao executar',
+                    codigo: '010',
+                    dados: erro,
+                }
+                console.error(erro)
+                response.status(200).send(resposta);
+            })
         }
-      })
+    });
       
     app.put('/Instituicao/',(request,response) => {
         const md5 = require('md5')
