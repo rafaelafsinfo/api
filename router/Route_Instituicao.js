@@ -251,7 +251,7 @@ module.exports = function(app,banco){
         const partialData = {};
       
         if (request.body.cnpj) partialData.Cnpj = request.body.cnpj;
-        if (request.body.nome_inst) partialData.NomeInst = request.body.nome_inst;
+        if (request.body.nome_inst) partialData.NomeInst = request.body.NomeInst;
         if (request.body.email) partialData.Email = request.body.email;
         if (request.body.senha) partialData.Senha = md5(request.body.senha);
         if (request.body.rua) partialData.Rua = request.body.rua;
