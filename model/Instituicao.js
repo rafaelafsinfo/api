@@ -88,7 +88,7 @@ module.exports = class Instituicao {
         return operacaoAssincrona;
     }
 
-    async update(partialData) {
+    async partialupdate(partialData) {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const parametros = [];
@@ -119,7 +119,7 @@ module.exports = class Instituicao {
         });
         return operacaoAssincrona;
     }
-    
+
     async update() {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {

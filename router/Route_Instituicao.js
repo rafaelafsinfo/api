@@ -277,7 +277,7 @@ module.exports = function(app,banco){
                 instituicao[key] = partialData[key];
               }
       
-          instituicao.update(partialData).then((resultadosBanco) => {
+          instituicao.partialupdate(partialData).then((resultadosBanco) => {
             const resposta = {
               status: true,
               msg: 'Executado com sucesso',
