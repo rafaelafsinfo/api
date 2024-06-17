@@ -273,7 +273,7 @@ module.exports = function(app,banco){
             response.status(200).send(resposta);
         } else {
             for (const key in partialData) {
-                instituicao[`set${key}`](partialData[key]);
+                instituicao[`set${key}`] = (partialData[key]);
             }
     
             instituicao.partialupdate(partialData).then((resultadosBanco) => {
