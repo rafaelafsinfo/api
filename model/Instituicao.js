@@ -89,64 +89,37 @@ module.exports = class Instituicao {
     }
 
     async update(partialData) {
-
         const md5 = require("md5");
-      
         const operacaoAssincrona = new Promise((resolve, reject) => {
-      
-          const parametros = [];
-      
-          let sql = "update Instituicao set ";
-      
-      
-          for (const key in partialData) {
-
-            if (key === 'senha' && partialData[key] !== null) {
-
-                sql += `${key} =?, `;
-
-                parametros.push(md5(partialData[key]));
-
-            } else if (key !== 'senha') {
-
-                sql += `${key} =?, `;
-
-                parametros.push(partialData[key]);
-
+            const parametros = [];
+            let sql = "update Instituicao set ";
+    
+            for (const key in partialData) {
+                if (key === 'senha' && partialData[key] !== null) {
+                    sql += `${key} =?, `;
+                    parametros.push(md5(partialData[key]));
+                } else if (key !== 'senha') {
+                    sql += `${key} =?, `;
+                    parametros.push(partialData[key]);
+                }
             }
-
-        }
-      
-      
-          sql = sql.slice(0, -2) + " where cnpj =?;";
-      
-          parametros.push(this.getCnpj());
-      
-      
-          this._banco.query(sql, parametros, function (error, result) {
-      
-            if (error) {
-      
-              console.log("reject => Instituicao.update(): " + JSON.stringify(error));
-      
-              reject(error);
-      
-            } else {
-      
-              console.log("resolve => Instituicao.update(): " + JSON.stringify(result));
-      
-              resolve(result);
-      
-            }
-      
-          });
-      
+    
+            sql = sql.slice(0, -2) + " where cnpj =?;";
+            parametros.push(this.getCnpj());
+    
+            this._banco.query(sql, parametros, function (error, result) {
+                if (error) {
+                    console.log("reject => Instituicao.update(): " + JSON.stringify(error));
+                    reject(error);
+                } else {
+                    console.log("resolve => Instituicao.update(): " + JSON.stringify(result));
+                    resolve(result);
+                }
+            });
         });
-      
         return operacaoAssincrona;
-      
-      }
-
+    }
+    
     async update() {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
