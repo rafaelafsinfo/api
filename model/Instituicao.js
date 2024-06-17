@@ -89,125 +89,31 @@ module.exports = class Instituicao {
     }
 
     async update(partialData) {
-
         const md5 = require("md5");
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+          const parametros = [];
+          let sql = "update Instituicao set ";
       
-        const parametros = [];
-      
-        const campos = [];
-      
-      
-        if (partialData.cnpj) {
-      
-          campos.push("cnpj =?");
-      
-          parametros.push(partialData.cnpj);
-      
-        }
-      
-        if (partialData.nome_inst) {
-      
-          campos.push("nome_inst =?");
-      
-          parametros.push(partialData.nome_inst);
-      
-        }
-      
-        if (partialData.email) {
-      
-          campos.push("email =?");
-      
-          parametros.push(partialData.email);
-      
-        }
-      
-      
-        if (partialData.rua) {
-      
-          campos.push("rua =?");
-      
-          parametros.push(partialData.rua);
-      
-        }
-      
-      
-        if (partialData.numero) {
-      
-          campos.push("numero =?");
-      
-          parametros.push(partialData.numero);
-      
-        }
-      
-      
-        if (partialData.bairro) {
-      
-          campos.push("bairro =?");
-      
-          parametros.push(partialData.bairro);
-      
-        }
-      
-      
-        if (partialData.cidade) {
-      
-          campos.push("cidade =?");
-      
-          parametros.push(partialData.cidade);
-      
-        }
-      
-      
-        if (partialData.estado) {
-      
-          campos.push("estado =?");
-      
-          parametros.push(partialData.estado);
-      
-        }
-      
-      
-        if (partialData.CEP) {
-      
-          campos.push("CEP =?");
-      
-          parametros.push(partialData.CEP);
-      
-        }
-      
-      
-        if (partialData.descricao) {
-      
-          campos.push("descricao =?");
-      
-          parametros.push(partialData.descricao);
-      
-        }
-            
-        const sql = `update Instituicao set ${campos.join(", ")} where cnpj =?;`;
-      
-        parametros.push(this.getCnpj());
-      
-      
-        this._banco.query(sql, parametros, function (error, result) {
-      
-          if (error) {
-      
-            console.log("reject => Instituicao.update(): " + JSON.stringify(error));
-      
-            reject(error);
-      
-          } else {
-      
-            console.log("resolve => Instituicao.update(): " + JSON.stringify(result));
-      
-            resolve(result);
-      
+          for (const key in partialData) {
+            sql += `${key} =?, `;
+            parametros.push(partialData[key]);
           }
       
-        });
+          sql = sql.slice(0, -2) + " where cnpj =?;";
+          parametros.push(this.getCnpj());
       
-    }
+          this._banco.query(sql, parametros, function (error, result) {
+            if (error) {
+              console.log("reject => Instituicao.update(): " + JSON.stringify(error));
+              reject(error);
+            } else {
+              console.log("resolve => Instituicao.update(): " + JSON.stringify(result));
+              resolve(result);
+            }
+          });
+        });
+        return operacaoAssincrona;
+      }
 
     async update() {
         const md5 = require("md5");
