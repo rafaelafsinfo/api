@@ -46,7 +46,7 @@ module.exports = class Instituicao {
                 descricao
             ];
 
-            let sql = "INSERT INTO `tcc`.`Instituicao` (`cnpj`, `nome_inst`, `email`, `senha`, `rua`, `numero`, `bairro`, `cidade`,`estado`,`CEP`,`descricao`) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
+            let sql = "INSERT INTO `tcc`.`Instituicao` (`Cnpj`, `NomeInst`, `Email`, `Senha`, `Rua`, `Numero`, `Bairro`, `Cidade`,`Estado`,`CEP`,`Descricao`) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {   
                     console.log("reject => Instituicao.create(): " + JSON.stringify(error))
@@ -69,9 +69,9 @@ module.exports = class Instituicao {
 
             
             if (email == null) {
-                SQL = "SELECT cnpj,nome_inst,email,rua,numero,bairro,cidade,estado,CEP,descricao FROM Instituicao ORDER BY email";
+                SQL = "SELECT Cnpj,NomeInst,Email,Rua,Numero,Bairro,Cidade,Estado,CEP,Descricao FROM Instituicao ORDER BY Email";
             } if (email != null){
-                SQL = "SELECT cnpj,nome_inst,email,rua,numero,bairro,cidade,estado,CEP,descricao FROM Instituicao where email=? ORDER BY email;";
+                SQL = "SELECT Cnpj,NomeInst,Email,Rua,Numero,Bairro,Cidade,Estado,CEP,Descricao FROM Instituicao where Email=? ORDER BY Email;";
             }
 
             this._banco.query(SQL, params, function (error, result) {
@@ -168,7 +168,7 @@ module.exports = class Instituicao {
                 cep,
                 descricao
             ];
-            const sql = "update Instituicao set nome_inst=?,email=?,senha=?,rua=?,numero=?,bairro=?,cidade=?,estado=?,CEP=?,descricao=? where cnpj =?;";
+            const sql = "update Instituicao set NomeInst=?,Email=?,Senha=?,Rua=?,Numero=?,Bairro=?,Cidade=?,Estado=?,CEP=?,Descricao=? where Cnpj =?;";
 
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {
@@ -182,44 +182,6 @@ module.exports = class Instituicao {
         });
         return operacaoAssincrona;
     }
-    async login(){
-        const md5 = require('md5'); 
-        const operacaoAssincrona = new Promise((resolve, reject) => {
-            const email = this.getEmail();
-            const senha = md5(this.getSenha());
-            console.log(email,senha)
-            const parametros = [email, senha];
-            const sql = `SELECT COUNT(*) AS qtd, cnpj,nome_inst,email,descricao FROM Instituicao WHERE email = ? AND senha = ?;`;
-
-            this._banco.query(sql, parametros, (error, result) => {
-                console.log(result)
-
-                if (error) {
-                    console.log(error)
-                    reject(error);
-                } else {
-                   
-                    if (result[0].qtd > 0) {
-                        const resposta = {
-                            status: true,
-                            cnpj: result[0].cnpj,
-                            nome_inst: result[0].nome_inst,
-                            email: result[0].email,
-                            descricao: result[0].descricao
-                        }
-                        resolve(resposta);
-                    } else {
-                        const resposta = {
-                            status: false,
-                        }
-                        resolve(resposta);
-                    }
-
-                }
-            });
-        });
-        return operacaoAssincrona;
-    }
 
     async delete() {
         //cria uma promise que retornará dados referentes a execução de 
@@ -228,7 +190,7 @@ module.exports = class Instituicao {
 
             const cnpj = this.getCnpj();
             let parametros = [cnpj];
-            let sql = "delete from Instituicao where cnpj = ?";
+            let sql = "delete from Instituicao where Cnpj = ?";
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {
                     console.log("reject => Instituicao.delete(): " + JSON.stringify(error));
@@ -250,7 +212,7 @@ module.exports = class Instituicao {
             const senha = md5(this.getSenha());
             console.log(email,senha)
             const parametros = [email, senha];
-            const sql = `SELECT COUNT(*) AS qtd, cnpj,nome_inst,email,descricao FROM Instituicao WHERE email = ? AND senha = ?;`;
+            const sql = `SELECT COUNT(*) AS qtd, Cnpj,NomeInst,Email,Descricao FROM Instituicao WHERE Email = ? AND Senha = ?;`;
 
             this._banco.query(sql, parametros, (error, result) => {
 
