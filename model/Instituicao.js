@@ -89,30 +89,52 @@ module.exports = class Instituicao {
     }
 
     async update(partialData) {
+
         const md5 = require("md5");
+      
         const operacaoAssincrona = new Promise((resolve, reject) => {
+      
           const parametros = [];
+      
           let sql = "update Instituicao set ";
       
+      
           for (const key in partialData) {
+      
             sql += `${key} =?, `;
+      
             parametros.push(partialData[key]);
+      
           }
       
+      
           sql = sql.slice(0, -2) + " where cnpj =?;";
+      
           parametros.push(this.getCnpj());
       
+      
           this._banco.query(sql, parametros, function (error, result) {
+      
             if (error) {
+      
               console.log("reject => Instituicao.update(): " + JSON.stringify(error));
+      
               reject(error);
+      
             } else {
+      
               console.log("resolve => Instituicao.update(): " + JSON.stringify(result));
+      
               resolve(result);
+      
             }
+      
           });
+      
         });
+      
         return operacaoAssincrona;
+      
       }
 
     async update() {
