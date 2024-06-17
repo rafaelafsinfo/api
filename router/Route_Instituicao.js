@@ -250,17 +250,17 @@ module.exports = function(app,banco){
         const md5 = require('md5')
         const partialData = {};
       
-        if (request.body.cnpj) partialData.Cnpj = request.body.Cnpj;
-        if (request.body.nome_inst) partialData.NomeInst = request.body.NomeInst;
-        if (request.body.email) partialData.Email = request.body.Email;
-        if (request.body.senha) partialData.Senha = md5(request.body.Senha);
-        if (request.body.rua) partialData.Rua = request.body.Rua;
-        if (request.body.numero) partialData.Numero = request.body.Numero;
-        if (request.body.bairro) partialData.Bairro = request.body.Bairro;
-        if (request.body.cidade) partialData.Cidade = request.body.Cidade;
-        if (request.body.estado) partialData.Estado = request.body.Estado;
+        if (request.body.Cnpj) partialData.Cnpj = request.body.Cnpj;
+        if (request.body.NomeInst) partialData.NomeInst = request.body.NomeInst;
+        if (request.body.Email) partialData.Email = request.body.Email;
+        if (request.body.Senha) partialData.Senha = md5(request.body.Senha);
+        if (request.body.Rua) partialData.Rua = request.body.Rua;
+        if (request.body.Numero) partialData.Numero = request.body.Numero;
+        if (request.body.Bairro) partialData.Bairro = request.body.Bairro;
+        if (request.body.Cidade) partialData.Cidade = request.body.Cidade;
+        if (request.body.Estado) partialData.Estado = request.body.Estado;
         if (request.body.CEP) partialData.CEP = request.body.CEP;
-        if (request.body.descricao) partialData.Descricao = request.body.Descricao;
+        if (request.body.Descricao) partialData.Descricao = request.body.Descricao;
       
         const instituicao = new Instituicao(banco);
       
