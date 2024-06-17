@@ -100,12 +100,22 @@ module.exports = class Instituicao {
       
       
           for (const key in partialData) {
-      
-            sql += `${key} =?, `;
-      
-            parametros.push(partialData[key]);
-      
-          }
+
+            if (key === 'senha' && partialData[key] !== null) {
+
+                sql += `${key} =?, `;
+
+                parametros.push(md5(partialData[key]));
+
+            } else if (key !== 'senha') {
+
+                sql += `${key} =?, `;
+
+                parametros.push(partialData[key]);
+
+            }
+
+        }
       
       
           sql = sql.slice(0, -2) + " where cnpj =?;";
