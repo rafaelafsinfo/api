@@ -1,13 +1,13 @@
 const { request, response } = require('express');
 const Usuario = require('../model/Usuario');
-const {randomUUID} = require('crypto');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = function(app,banco){
     const Usuario = require('../model/Usuario')
 
     app.post('/Usuario',(request,response) =>{
         console.log("rota => POST: /Usuario");
-        const id = randomUUID()
+        const id = uuidv4()
         const p_nome = request.body.p_nome
         const sobrenome = request.body.sobrenome
         const username = request.body.username

@@ -1,11 +1,11 @@
-const {randomUUID} = require('crypto');
+const { v4: uuidv4 } = require('uuid');
 
 module.exports = function(app,banco){
     const Doacoes = require('../model/Doacoes');
 
     app.post('/Doacoes',(request,response) =>{
         console.log("rota => POST: /Doacoes");
-        const id = randomUUID()
+        const id = uuidv4()
         const id_usuario = request.body.id_usuario
         const id_instituicao = request.body.id_instituicao
         const produto = request.body.produto
