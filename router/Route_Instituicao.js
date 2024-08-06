@@ -194,7 +194,7 @@ module.exports = function(app,banco){
     app.post('/Login/Instituicao',(request,response) => {
         const email = request.body.email
         const senha = request.body.senha
-        if (email == null || senha == "") {
+        if (email == "" || senha == "") {
             //cria um objeto json de resposta.
             const resposta = {
               status: false,

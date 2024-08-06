@@ -46,9 +46,9 @@ module.exports = class Doacoes {
 
             
             if (id == null) {
-                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.nome_inst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj ORDER BY id";
+                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj ORDER BY id";
             } if (id != null){
-                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.nome_inst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj where id=? ORDER BY id;";
+                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj where id=? ORDER BY id;";
             }
 
             this._banco.query(SQL, params, function (error, result) {

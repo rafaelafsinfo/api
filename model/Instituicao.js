@@ -205,7 +205,7 @@ module.exports = class Instituicao {
 
     }
 
-    async login(){
+    async  login(){
         const md5 = require('md5'); 
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const email = this.getEmail();
