@@ -250,6 +250,7 @@ module.exports = class Instituicao {
                             descricao: result[0].descricao,
                             token: token
                         }
+                        console.log(resposta)
                         resolve(resposta);
                     } else {
                         const resposta = {
