@@ -206,6 +206,7 @@ module.exports = class Instituicao {
     }
 
     async  login(){
+        const jose = require('jose')
         const md5 = require('md5'); 
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const email = this.getEmail();
@@ -222,13 +223,32 @@ module.exports = class Instituicao {
                 } else {
                    
                     if (result) {
-                       // console.log(result)
+                        const payload = {
+                            email: email,
+                            senha: senha,
+                        }
+
+                        const secret = new TextEncoder().encode(
+                            process.env.passworld,
+                        )
+                        const alg = 'HS256'
+                    
+                        const token = new jose.SignJWT({ 'urn:example:claim': true })
+                        .setProtectedHeader({ alg })
+                        .setIssuedAt()
+                        .setIssuer('urn:example:issuer')
+                        .setAudience('urn:example:audience')
+                        .setExpirationTime('2h')
+                        .sign(secret)
+
+                        console.log(result)
                         const resposta = {
                             status: true,
                             cnpj: result[0].cnpj,
                             nome_inst: result[0].nome_inst,
                             email: result[0].email,
-                            descricao: result[0].descricao
+                            descricao: result[0].descricao,
+                            token: token
                         }
                         resolve(resposta);
                     } else {
