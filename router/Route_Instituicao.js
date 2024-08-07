@@ -214,6 +214,7 @@ module.exports = function(app,banco){
             
 
             instituicao.login().then((respostaLogin) => {
+                console.log(respostaLogin)
                 if (respostaLogin.status == true) { 
                     const resposta = {
                         cnpj: respostaLogin.cnpj,
