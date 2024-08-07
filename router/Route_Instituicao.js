@@ -5,9 +5,9 @@ module.exports = function(app,banco){
 
     app.post('/Instituicao',(request,response) =>{
         console.log("rota => POST: /Instituicao");
-        const cnpj = request.body.cnpj
-        const nome_inst = request.body.nome_inst
-        const email = request.body.email
+        const Cnpj = request.body.Cnpj
+        const NomeInst = request.body.NomeInst
+        const Email = request.body.Email
         const senha = request.body.senha
         const rua = request.body.rua
         const numero = request.body.numero
@@ -15,18 +15,18 @@ module.exports = function(app,banco){
         const cidade = request.body.cidade
         const estado = request.body.estado
         const CEP = request.body.CEP
-        const descricao = request.body.descricao
+        const Descricao = request.body.Descricao
 
 
-        if (cnpj == ""){
+        if (Cnpj == ""){
             const resposta={
                 status: true,
-                msg: 'o cnpj não pode ser vazio',
+                msg: 'o Cnpj não pode ser vazio',
                 codigo: '001',
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(nome_inst == ""){
+        }else if(NomeInst == ""){
             const resposta={
                 status: true,
                 msg: 'o nome não pode ser vazio',
@@ -34,7 +34,7 @@ module.exports = function(app,banco){
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(email == ""){
+        }else if(Email == ""){
             const resposta={
                 status: true,
                 msg: 'o primeiro nome não pode ser vazio',
@@ -98,19 +98,19 @@ module.exports = function(app,banco){
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(descricao == ""){
+        }else if(Descricao == ""){
             const resposta={
                 status: true,
-                msg: 'a descricao não pode ser vazio',
+                msg: 'a Descricao não pode ser vazio',
                 codigo: '001',
                 dados: "{}"
             }
             response.status(200).send(resposta);
         }else{
             const instituicao = new Instituicao(banco)
-            instituicao.setCnpj(cnpj)
-            instituicao.setNomeInst(nome_inst)
-            instituicao.setEmail(email)
+            instituicao.setCnpj(Cnpj)
+            instituicao.setNomeInst(NomeInst)
+            instituicao.setEmail(Email)
             instituicao.setSenha(senha)
             instituicao.setRua(rua)
             instituicao.setNumero(numero)
@@ -118,7 +118,7 @@ module.exports = function(app,banco){
             instituicao.setCidade(cidade)
             instituicao.setEstado(estado)
             instituicao.setCEP(CEP)
-            instituicao.setDescricao(descricao)
+            instituicao.setDescricao(Descricao)
 
             instituicao.create().then((resultadosBanco) => {
                 const resposta = {
@@ -126,16 +126,16 @@ module.exports = function(app,banco){
                     msg: 'Executado com sucesso',
                     codigo: '002',
                     dados: {
-                        cnpj: resultadosBanco.cnpj,
-                        nome_inst: instituicao.getNomeInst(),
-                        email: instituicao.getEmail(),
+                        Cnpj: resultadosBanco.Cnpj,
+                        NomeInst: instituicao.getNomeInst(),
+                        Email: instituicao.getEmail(),
                         rua: instituicao.getRua(),
                         numero: instituicao.getNumero(),
                         bairro: instituicao.getBairro(),
                         cidade: instituicao.getCidade(),
                         estado: instituicao.getEstado(),
                         CEP: instituicao.getCEP(),
-                        descricao: instituicao.getDescricao()
+                        Descricao: instituicao.getDescricao()
                     }
                 }
                 console.log(resultadosBanco)
@@ -168,11 +168,11 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.get('/Instituicao/:email',(request,response) => {
-        const email = request.params.email
+    app.get('/Instituicao/:Email',(request,response) => {
+        const Email = request.params.Email
         const instituicao = new Instituicao(banco)
-        instituicao.setEmail(email)
-        instituicao.read(email).then((resultadosBanco) => {
+        instituicao.setEmail(Email)
+        instituicao.read(Email).then((resultadosBanco) => {
             const resposta = {
                 status: true,
                 msg: 'Executado com sucesso',
@@ -192,13 +192,13 @@ module.exports = function(app,banco){
         })
     })
     app.post('/Login/Instituicao',(request,response) => {
-        const email = request.body.email
+        const Email = request.body.Email
         const senha = request.body.senha
-        if (email == "" || senha == "") {
+        if (Email == "" || senha == "") {
             //cria um objeto json de resposta.
             const resposta = {
               status: false,
-              msg: 'email ou senha não podem ser vazios',
+              msg: 'Email ou senha não podem ser vazios',
               codigo: '001',
               dados: "{}",
             }
@@ -209,7 +209,7 @@ module.exports = function(app,banco){
           }else{
 
             const instituicao = new Instituicao(banco)
-            instituicao.setEmail(email)
+            instituicao.setEmail(Email)
             instituicao.setSenha(senha)
             
 
@@ -217,10 +217,10 @@ module.exports = function(app,banco){
                 console.log(respostaLogin)
                 if (respostaLogin.status == true) { 
                     const resposta = {
-                        cnpj: respostaLogin.cnpj,
-                        nome_inst: respostaLogin.nome_inst,
-                        email: respostaLogin.email,
-                        descricao: respostaLogin.descricao
+                        Cnpj: respostaLogin.Cnpj,
+                        NomeInst: respostaLogin.NomeInst,
+                        Email: respostaLogin.Email,
+                        Descricao: respostaLogin.Descricao
                     }
                 response.status(200).send(resposta)
             } else {
@@ -284,16 +284,16 @@ module.exports = function(app,banco){
               msg: 'Executado com sucesso',
               codigo: '002',
               dados: {
-                cnpj: resultadosBanco.cnpj,
-                nome_inst: instituicao.getNomeInst(),
-                email: instituicao.getEmail(),
+                Cnpj: resultadosBanco.Cnpj,
+                NomeInst: instituicao.getNomeInst(),
+                Email: instituicao.getEmail(),
                 rua: instituicao.getRua(),
                 numero: instituicao.getNumero(),
                 bairro: instituicao.getBairro(),
                 cidade: instituicao.getCidade(),
                 estado: instituicao.getEstado(),
                 CEP: instituicao.getCEP(),
-                descricao: instituicao.getDescricao()
+                Descricao: instituicao.getDescricao()
               },
             }
             response.status(200).send(resposta)
@@ -312,9 +312,9 @@ module.exports = function(app,banco){
       
     app.put('/Instituicao/',(request,response) => {
         const md5 = require('md5')
-        const cnpj = request.body.cnpj
-        const nome_inst = request.body.nome_inst
-        const email = request.body.email
+        const Cnpj = request.body.Cnpj
+        const NomeInst = request.body.NomeInst
+        const Email = request.body.Email
         const senha = request.body.senha
         const rua = request.body.rua
         const numero = request.body.numero
@@ -322,18 +322,18 @@ module.exports = function(app,banco){
         const cidade = request.body.cidade
         const estado = request.body.estado
         const CEP = request.body.CEP
-        const descricao = request.body.descricao
+        const Descricao = request.body.Descricao
 
 
-        if (cnpj == ""){
+        if (Cnpj == ""){
             const resposta={
                 status: true,
-                msg: 'o cnpj não pode ser vazio',
+                msg: 'o Cnpj não pode ser vazio',
                 codigo: '001',
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(nome_inst == ""){
+        }else if(NomeInst == ""){
             const resposta={
                 status: true,
                 msg: 'o nome não pode ser vazio',
@@ -341,7 +341,7 @@ module.exports = function(app,banco){
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(email == ""){
+        }else if(Email == ""){
             const resposta={
                 status: true,
                 msg: 'o primeiro nome não pode ser vazio',
@@ -405,19 +405,19 @@ module.exports = function(app,banco){
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(descricao == ""){
+        }else if(Descricao == ""){
             const resposta={
                 status: true,
-                msg: 'a descricao não pode ser vazio',
+                msg: 'a Descricao não pode ser vazio',
                 codigo: '001',
                 dados: "{}"
             }
             response.status(200).send(resposta);
         }else{
             const instituicao = new Instituicao(banco)
-            instituicao.setCnpj(cnpj)
-            instituicao.setNomeInst(nome_inst)
-            instituicao.setEmail(email)
+            instituicao.setCnpj(Cnpj)
+            instituicao.setNomeInst(NomeInst)
+            instituicao.setEmail(Email)
             instituicao.setSenha(senha)
             instituicao.setRua(rua)
             instituicao.setNumero(numero)
@@ -425,23 +425,23 @@ module.exports = function(app,banco){
             instituicao.setCidade(cidade)
             instituicao.setEstado(estado)
             instituicao.setCEP(CEP)
-            instituicao.setDescricao(descricao)
+            instituicao.setDescricao(Descricao)
             instituicao.update().then((resultadosBanco) =>{
                 const resposta = {
                     status: true,
                     msg: 'Executado com sucesso',
                     codigo: '002',
                     dados: {
-                        cnpj: resultadosBanco.cnpj,
-                        nome_inst: instituicao.getNomeInst(),
-                        email: instituicao.getEmail(),
+                        Cnpj: resultadosBanco.Cnpj,
+                        NomeInst: instituicao.getNomeInst(),
+                        Email: instituicao.getEmail(),
                         rua: instituicao.getRua(),
                         numero: instituicao.getNumero(),
                         bairro: instituicao.getBairro(),
                         cidade: instituicao.getCidade(),
                         estado: instituicao.getEstado(),
                         CEP: instituicao.getCEP(),
-                        descricao: instituicao.getDescricao()
+                        Descricao: instituicao.getDescricao()
                     },
                 }
                 response.status(200).send(resposta)
@@ -459,16 +459,16 @@ module.exports = function(app,banco){
     })
 
     app.delete('/Instituicao/',(request,response) => {
-        const cnpj = request.body.cnpj
+        const Cnpj = request.body.Cnpj
         const instituicao = new Instituicao(banco)
-        instituicao.setCnpj(cnpj)
+        instituicao.setCnpj(Cnpj)
         instituicao.delete().then((resultadosBanco) =>{
             const resposta = {
                 status: true,
                 msg: 'Excluido com sucesso',
                 codigo: '008',
                 dados: {
-                  cnpj: instituicao.getCnpj(),
+                  Cnpj: instituicao.getCnpj(),
                 },
               }
               response.status(200).send(resposta)
