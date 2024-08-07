@@ -222,7 +222,7 @@ module.exports = class Instituicao {
                 } else {
                    
                     if (result) {
-                       console.log(result.cnpj)
+                       console.log(result.Cnpj)
                         const resposta = {
                             status: true,
                             cnpj: result[0].cnpj,
