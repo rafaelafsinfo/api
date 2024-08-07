@@ -1,9 +1,9 @@
 module.exports = class Instituicao {
     constructor(banco){
         this._banco = banco;
-        this._cnpj = null;
+        this._Cnpj = null;
         this._nome_inst = null;
-        this._email = null;
+        this._Email = null;
         this._senha = null;
         this._rua = null;
         this._numero = null;
@@ -19,9 +19,9 @@ module.exports = class Instituicao {
         
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
-            const cnpj = this.getCnpj() 
+            const Cnpj = this.getCnpj() 
             const nome_inst = this.getNomeInst();
-            const email = this.getEmail();
+            const Email = this.getEmail();
             const senha = md5(this.getSenha());
             const rua = this.getRua()
             const numero = this.getNumero()
@@ -33,9 +33,9 @@ module.exports = class Instituicao {
 
 
             const parametros = [
-                cnpj,
+                Cnpj,
                 nome_inst,
-                email,
+                Email,
                 senha,
                 rua,
                 numero,
@@ -63,14 +63,14 @@ module.exports = class Instituicao {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const email = this.getEmail();
-            let params = [email]
+            const Email = this.getEmail();
+            let params = [Email]
             let SQL = "";
 
             
-            if (email == null) {
+            if (Email == null) {
                 SQL = "SELECT Cnpj,NomeInst,Email,Rua,Numero,Bairro,Cidade,Estado,CEP,Descricao FROM Instituicao ORDER BY Email";
-            } if (email != null){
+            } if (Email != null){
                 SQL = "SELECT Cnpj,NomeInst,Email,Rua,Numero,Bairro,Cidade,Estado,CEP,Descricao FROM Instituicao where Email=? ORDER BY Email;";
             }
 
@@ -111,7 +111,7 @@ module.exports = class Instituicao {
         }
 
 
-        sql = sql.slice(0, -2) + " where cnpj =?;";
+        sql = sql.slice(0, -2) + " where Cnpj =?;";
 
         parametros.push(this.getCnpj());
 
@@ -142,9 +142,9 @@ module.exports = class Instituicao {
     async update() {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
-            const cnpj = this.getCnpj() 
+            const Cnpj = this.getCnpj() 
             const nome_inst = this.getNomeInst();
-            const email = this.getEmail();
+            const Email = this.getEmail();
             const senha = md5(this.getSenha());
             const rua = this.getRua()
             const numero = this.getNumero()
@@ -156,9 +156,9 @@ module.exports = class Instituicao {
 
 
             const parametros = [
-                cnpj,
+                Cnpj,
                 nome_inst,
-                email,
+                Email,
                 senha,
                 rua,
                 numero,
@@ -188,8 +188,8 @@ module.exports = class Instituicao {
         //uma instrução sql no banco.
         const operacaoAssincrona = new Promise((resolve, reject) => {
 
-            const cnpj = this.getCnpj();
-            let parametros = [cnpj];
+            const Cnpj = this.getCnpj();
+            let parametros = [Cnpj];
             let sql = "delete from Instituicao where Cnpj = ?";
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {
@@ -208,10 +208,10 @@ module.exports = class Instituicao {
     async  login(){
         const md5 = require('md5'); 
         const operacaoAssincrona = new Promise((resolve, reject) => {
-            const email = this.getEmail();
-            const senha = md5(this.getSenha());
-            console.log(email,senha)
-            const parametros = [email, senha];
+            const Email = this.getEmail();
+            const Senha = md5(this.getSenha());
+            console.log(Email,Senha)
+            const parametros = [Email, Senha];
             const sql = `SELECT COUNT(*) AS qtd, Cnpj,NomeInst,Email,Descricao FROM Instituicao WHERE Email = ? AND Senha = ?;`;
 
             this._banco.query(sql, parametros, (error, result) => {
@@ -225,10 +225,10 @@ module.exports = class Instituicao {
                        console.log(result.Cnpj)
                         const resposta = {
                             status: true,
-                            cnpj: result[0].cnpj,
-                            nome_inst: result[0].nome_inst,
-                            email: result[0].email,
-                            descricao: result[0].descricao
+                            Cnpj: result[0].Cnpj,
+                            NomeInst: result[0].NomeInst,
+                            Email: result[0].Email,
+                            Descricao: result[0].Descricao
                      }
                         resolve(resposta);
                     } else {
@@ -244,11 +244,11 @@ module.exports = class Instituicao {
         return operacaoAssincrona;
     }
 
-    setCnpj(cnpj) {
-        this._cnpj = cnpj
+    setCnpj(Cnpj) {
+        this._Cnpj = Cnpj
     }
     getCnpj() {
-        return this._cnpj
+        return this._Cnpj
     }
     setNomeInst(nome_inst) {
         this._nome_inst = nome_inst;
@@ -256,11 +256,11 @@ module.exports = class Instituicao {
     getNomeInst() {
         return this._nome_inst;
     }
-    setEmail(email) {
-        this._email = email;
+    setEmail(Email) {
+        this._Email = Email;
     }
     getEmail() {
-        return this._email;
+        return this._Email;
     }
     setSenha(senha) {
         this._senha = senha;
