@@ -244,10 +244,10 @@ module.exports = class Instituicao {
                         console.log(result)
                         const resposta = {
                             status: true,
-                            cnpj: result[0].cnpj,
-                            nome_inst: result[0].nome_inst,
-                            email: result[0].email,
-                            descricao: result[0].descricao,
+                            cnpj: result.cnpj,
+                            nome_inst: result.nome_inst,
+                            email: result.email,
+                            descricao: result.descricao,
                             token: token
                         }
                         console.log(resposta)
