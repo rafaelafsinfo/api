@@ -193,7 +193,7 @@ module.exports = function(app,banco){
     })
     app.post('/Login/Instituicao',(request,response) => {
         const Email = request.body.Email
-        const senha = request.body.senha
+        const Senha = request.body.Senha
         if (Email == "" || senha == "") {
             //cria um objeto json de resposta.
             const resposta = {
@@ -210,7 +210,7 @@ module.exports = function(app,banco){
 
             const instituicao = new Instituicao(banco)
             instituicao.setEmail(Email)
-            instituicao.setSenha(senha)
+            instituicao.setSenha(Senha)
             
 
             instituicao.login().then((respostaLogin) => {
