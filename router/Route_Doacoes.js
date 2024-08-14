@@ -136,10 +136,10 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
-    app.get('/Doacoes/Inst',(request,response) => {
+    app.get('/Doacoes/Inst/:Email',(request,response) => {
         const doacoes = new Doacoes(banco)
         const id = request.body.Cnpj
-        doacoes.setIdInstituicao(id)
+        doacoes.set(id)
         doacoes.readInst(id).then((resultadosBanco) => {
             const resposta = {
                 status: true,

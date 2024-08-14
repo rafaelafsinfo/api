@@ -4,6 +4,7 @@ module.exports = class Doacoes {
         this._id = null;
         this._id_usuario = null;
         this._id_instituicao = null;
+        this._Email
         this._produto = null
         this._data_doacao = null
         this._trajetoria = null
@@ -68,15 +69,15 @@ module.exports = class Doacoes {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const id = this.getidInstituicao();
-            let params = [id]
+            const Email = this.getEmail();
+            let params = [Email]
             let SQL = "";
 
             
             if (id == null) {
                 SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj ORDER BY id";
             } if (id != null){
-                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj where U.Cnpj=? ORDER BY id;";
+                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj where I.Email=? ORDER BY id;";
             }
 
             this._banco.query(SQL, params, function (error, result) {
@@ -187,6 +188,12 @@ module.exports = class Doacoes {
     }
     getidInstituicao(){
         return this._id_instituicao
+    }
+    setEmail(Email){
+        this._id_instituicao = Email
+    }
+    getEmail(){
+        return this._Email
     }
     setProduto(produto){
         this._produto = produto
