@@ -138,7 +138,7 @@ module.exports = function(app,banco){
     })
     app.get('/Doacoes/Inst/:Email',(request,response) => {
         const doacoes = new Doacoes(banco)
-        const id = request.body.Cnpj
+        const id = request.params.Email
         doacoes.set(id)
         doacoes.readInst(id).then((resultadosBanco) => {
             const resposta = {
