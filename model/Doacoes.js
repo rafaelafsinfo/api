@@ -64,6 +64,62 @@ module.exports = class Doacoes {
 
         return operacaoAssincrona;
     }
+    async readInst() {
+        
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            
+            const id = this.getidInstituicao();
+            let params = [id]
+            let SQL = "";
+
+            
+            if (id == null) {
+                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj ORDER BY id";
+            } if (id != null){
+                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj where id_instituicao=? ORDER BY id;";
+            }
+
+            this._banco.query(SQL, params, function (error, result) {
+                if (error) {
+                    console.log("reject => Doacoes.Read(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Doacoes.Read(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+
+        return operacaoAssincrona;
+    }
+    async readUser() {
+        
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            
+            const id = this.getIdUsuario();
+            let params = [id]
+            let SQL = "";
+
+            
+            if (id == null) {
+                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj ORDER BY id";
+            } if (id != null){
+                SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj where id_usuario=? ORDER BY id;";
+            }
+
+            this._banco.query(SQL, params, function (error, result) {
+                if (error) {
+                    console.log("reject => Doacoes.Read(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Doacoes.Read(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+
+        return operacaoAssincrona;
+    }
 
     async update() {
         const operacaoAssincrona = new Promise((resolve, reject) => {

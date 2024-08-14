@@ -144,8 +144,6 @@ module.exports = class Instituicao {
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const Cnpj = this.getCnpj() 
             const nome_inst = this.getNomeInst();
-            const Email = this.getEmail();
-            const senha = md5(this.getSenha());
             const rua = this.getRua()
             const numero = this.getNumero()
             const bairro = this.getBairro()
@@ -158,8 +156,6 @@ module.exports = class Instituicao {
             const parametros = [
                 Cnpj,
                 nome_inst,
-                Email,
-                senha,
                 rua,
                 numero,
                 bairro,
@@ -168,7 +164,7 @@ module.exports = class Instituicao {
                 cep,
                 descricao
             ];
-            const sql = "update Instituicao set NomeInst=?,Email=?,Senha=?,Rua=?,Numero=?,Bairro=?,Cidade=?,Estado=?,CEP=?,Descricao=? where Cnpj =?;";
+            const sql = "update Instituicao set NomeInst=?,Rua=?,Numero=?,Bairro=?,Cidade=?,Estado=?,CEP=?,Descricao=? where Cnpj =?;";
 
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {

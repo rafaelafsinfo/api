@@ -136,6 +136,52 @@ module.exports = function(app,banco){
               response.status(200).send(resposta)
         })
     })
+    app.get('/Doacoes/Inst',(request,response) => {
+        const doacoes = new Doacoes(banco)
+        const id = request.body.Cnpj
+        doacoes.setIdInstituicao(id)
+        doacoes.readInst(id).then((resultadosBanco) => {
+            const resposta = {
+                status: true,
+                msg: 'Executado com sucesso',
+                dados: resultadosBanco,
+                codigo: '003'
+            }
+            response.status(200).send(resposta)
+        }).catch((erro) => {
+            const resposta = {
+                status: false,
+                codigo: '004',
+                msg: 'erro ao executar',
+                dados: erro
+              }
+              console.error(erro)
+              response.status(200).send(resposta)
+        })
+    })
+    app.get('/Doacoes/User/:id',(request,response) => {
+        const doacoes = new Doacoes(banco)
+        const id = request.params.id
+        doacoes.setIdUsuario(id)
+        doacoes.readUser(id).then((resultadosBanco) => {
+            const resposta = {
+                status: true,
+                msg: 'Executado com sucesso',
+                dados: resultadosBanco,
+                codigo: '003'
+            }
+            response.status(200).send(resposta)
+        }).catch((erro) => {
+            const resposta = {
+                status: false,
+                codigo: '004',
+                msg: 'erro ao executar',
+                dados: erro
+              }
+              console.error(erro)
+              response.status(200).send(resposta)
+        })
+    })
     app.put('/Doacoes',(request,response) => {
         const id = request.body.id
         const id_usuario = request.body.id_usuario
