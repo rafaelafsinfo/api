@@ -150,6 +150,29 @@ module.exports = class Doacoes {
         return operacaoAssincrona;
     }
 
+    async finalizarTrajetoria() {
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            const id = this.getId() 
+
+
+
+            const parametros = [id];
+
+            const sql = "update Doacoes set trajetoria=1 where id = ?";
+
+            this._banco.query(sql, parametros, function (error, result) {
+                if (error) {
+                    console.log("reject => Doacoes.update(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Doacoes.update(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+
+        return operacaoAssincrona;
+    }
     async delete() {
         //cria uma promise que retornará dados referentes a execução de 
         //uma instrução sql no banco.

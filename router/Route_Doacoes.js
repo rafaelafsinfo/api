@@ -275,6 +275,44 @@ module.exports = function(app,banco){
         }
     })
 
+    app.put('/Doacoes/trajetoria',(request,response) => {
+        const id = request.body.id
+
+        if (id == ""){
+            const resposta={
+                status: true,
+                msg: 'o id não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else{
+            const doacoes = new Doacoes(banco)
+            doacoes.setId(id)
+            
+
+            doacoes.finalizarTrajetoria().then((resultadosBanco) =>{
+                const resposta = {
+                    status: true,
+                    msg: 'Executado com sucesso',
+                    codigo: '002',
+                    dados: {
+                        id: resultadosBanco.id,
+                    },
+                }
+                response.status(200).send(resposta)
+            }).catch((erro) =>{
+                const resposta = {
+                    status: false,
+                    msg: 'erro ao executar',
+                    codigo: '010',
+                    dados: erro,
+                  }
+                  console.error(erro)
+                  response.status(200).send(resposta);
+            })
+        }
+    })
     app.delete('/Doacoes/:id', (request,response) => {
         const id = request.params.id
         const doacoes = new Doacoes(banco)
