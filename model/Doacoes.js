@@ -97,14 +97,14 @@ module.exports = class Doacoes {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const id = this.getIdUsuario();
-            let params = [id]
+            const idUsuario = this.getIdUsuario();
+            let params = [idUsuario]
             let SQL = "";
 
             
-            if (id == null) {
+            if (idUsuario == null) {
                 SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj ORDER BY id";
-            } if (id != null){
+            } if (idUsuario != null){
                 SQL = "SELECT D.id, D.produto, D.data_doacao, D.trajetoria, U.p_nome, U.sobrenome, U.username, U.email, I.NomeInst, I.email, I.rua, I.numero, I.bairro, I.cidade, I.estado, I.CEP, I.descricao FROM Doacoes D INNER JOIN Usuario U ON D.id_usuario = U.id INNER JOIN Instituicao I ON D.id_instituicao = I.cnpj where id_usuario=? ORDER BY id;";
             }
 
