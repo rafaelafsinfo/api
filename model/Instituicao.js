@@ -101,7 +101,6 @@ module.exports = class Instituicao {
             const cep = this.getCEP()
             const descricao = this.getDescricao()
 
-
             const parametros = [
                 Cnpj,
                 nome_inst,
