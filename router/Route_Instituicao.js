@@ -1,5 +1,3 @@
-
-
 module.exports = function(app,banco){
     const Instituicao = require('../model/Instituicao')
 
@@ -147,50 +145,9 @@ module.exports = function(app,banco){
 
     })
 
-    app.get('/Instituicao',(request,response) => {
-        const instituicao = new Instituicao(banco)
-        instituicao.read().then((resultadosBanco) => {
-            const resposta = {
-                status: true,
-                msg: 'Executado com sucesso',
-                dados: resultadosBanco,
-                codigo: '003'
-            }
-            response.status(200).send(resposta)
-        }).catch((erro) => {
-            const resposta = {
-                status: false,
-                codigo: '004',
-                msg: 'erro ao executar',
-                dados: erro
-              }
-              console.error(erro)
-              response.status(200).send(resposta)
-        })
-    })
-    app.get('/Instituicao/:Email',(request,response) => {
-        const Email = request.params.Email
-        const instituicao = new Instituicao(banco)
-        instituicao.setEmail(Email)
-        instituicao.read(Email).then((resultadosBanco) => {
-            const resposta = {
-                status: true,
-                msg: 'Executado com sucesso',
-                dados: resultadosBanco,
-                codigo: '003'
-            }
-            response.status(200).send(resposta)
-        }).catch((erro) => {
-            const resposta = {
-                status: false,
-                codigo: '004',
-                msg: 'erro ao executar',
-                dados: erro
-              }
-              console.error(erro)
-              response.status(200).send(resposta)
-        })
-    })
+
+
+
     app.post('/Login/Instituicao',(request,response) => {
         const Email = request.body.Email
         const Senha = request.body.Senha
@@ -247,75 +204,65 @@ module.exports = function(app,banco){
         }
     })
 
-    app.patch('/Instituicao/', (request, response) => {
-        const md5 = require('md5')
-        const partialData = {};
-      
-        if (request.body.Cnpj) partialData.Cnpj = request.body.Cnpj;
-        if (request.body.NomeInst) partialData.NomeInst = request.body.NomeInst;
-        if (request.body.Email) partialData.Email = request.body.Email;
-        if (request.body.Senha) partialData.Senha = md5(request.body.Senha);
-        if (request.body.Rua) partialData.Rua = request.body.Rua;
-        if (request.body.Numero) partialData.Numero = request.body.Numero;
-        if (request.body.Bairro) partialData.Bairro = request.body.Bairro;
-        if (request.body.Cidade) partialData.Cidade = request.body.Cidade;
-        if (request.body.Estado) partialData.Estado = request.body.Estado;
-        if (request.body.CEP) partialData.CEP = request.body.CEP;
-        if (request.body.Descricao) partialData.Descricao = request.body.Descricao;
-      
-        const instituicao = new Instituicao(banco);
-      
-        if (Object.keys(partialData).length === 0) {
-          const resposta = {
-            status: true,
-            msg: 'Nenhum campo foi alterado',
-            codigo: '001',
-            dados: "{}"
-          }
-          response.status(200).send(resposta);
-        } else {
-            for (const key in partialData) {
-                instituicao[key] = partialData[key];
-              }
-      
-          instituicao.partialupdate(partialData).then((resultadosBanco) => {
+
+
+
+    app.get('/Instituicao',(request,response) => {
+        const instituicao = new Instituicao(banco)
+        instituicao.read().then((resultadosBanco) => {
             const resposta = {
-              status: true,
-              msg: 'Executado com sucesso',
-              codigo: '002',
-              dados: {
-                Cnpj: resultadosBanco.Cnpj,
-                NomeInst: instituicao.getNomeInst(),
-                Email: instituicao.getEmail(),
-                rua: instituicao.getRua(),
-                numero: instituicao.getNumero(),
-                bairro: instituicao.getBairro(),
-                cidade: instituicao.getCidade(),
-                estado: instituicao.getEstado(),
-                CEP: instituicao.getCEP(),
-                Descricao: instituicao.getDescricao()
-              },
+                status: true,
+                msg: 'Executado com sucesso',
+                dados: resultadosBanco,
+                codigo: '003'
             }
             response.status(200).send(resposta)
-          }).catch((erro) => {
+        }).catch((erro) => {
             const resposta = {
-              status: false,
-              msg: 'erro ao executar',
-              codigo: '010',
-              dados: erro,
+                status: false,
+                codigo: '004',
+                msg: 'erro ao executar',
+                dados: erro
+              }
+              console.error(erro)
+              response.status(200).send(resposta)
+        })
+    })
+
+
+
+
+    app.get('/Instituicao/:Email',(request,response) => {
+        const Email = request.params.Email
+        const instituicao = new Instituicao(banco)
+        instituicao.setEmail(Email)
+        instituicao.read(Email).then((resultadosBanco) => {
+            const resposta = {
+                status: true,
+                msg: 'Executado com sucesso',
+                dados: resultadosBanco,
+                codigo: '003'
             }
-            console.error(erro)
-            response.status(200).send(resposta);
-          })
-        }
-      })
-      
+            response.status(200).send(resposta)
+        }).catch((erro) => {
+            const resposta = {
+                status: false,
+                codigo: '004',
+                msg: 'erro ao executar',
+                dados: erro
+              }
+              console.error(erro)
+              response.status(200).send(resposta)
+        })
+    })
+
+
+
+
     app.put('/Instituicao/',(request,response) => {
         const md5 = require('md5')
         const Cnpj = request.body.Cnpj
         const NomeInst = request.body.NomeInst
-        const Email = request.body.Email
-        const senha = request.body.senha
         const rua = request.body.rua
         const numero = request.body.numero
         const bairro = request.body.bairro
@@ -337,22 +284,6 @@ module.exports = function(app,banco){
             const resposta={
                 status: true,
                 msg: 'o nome não pode ser vazio',
-                codigo: '001',
-                dados: "{}"
-            }
-            response.status(200).send(resposta);
-        }else if(Email == ""){
-            const resposta={
-                status: true,
-                msg: 'o primeiro nome não pode ser vazio',
-                codigo: '001',
-                dados: "{}"
-            }
-            response.status(200).send(resposta);
-        }else if(senha == ""){
-            const resposta={
-                status: true,
-                msg: 'a senha não pode ser vazio',
                 codigo: '001',
                 dados: "{}"
             }
@@ -417,8 +348,6 @@ module.exports = function(app,banco){
             const instituicao = new Instituicao(banco)
             instituicao.setCnpj(Cnpj)
             instituicao.setNomeInst(NomeInst)
-            instituicao.setEmail(Email)
-            instituicao.setSenha(senha)
             instituicao.setRua(rua)
             instituicao.setNumero(numero)
             instituicao.setBairro(bairro)
@@ -434,7 +363,6 @@ module.exports = function(app,banco){
                     dados: {
                         Cnpj: resultadosBanco.Cnpj,
                         NomeInst: instituicao.getNomeInst(),
-                        Email: instituicao.getEmail(),
                         rua: instituicao.getRua(),
                         numero: instituicao.getNumero(),
                         bairro: instituicao.getBairro(),
@@ -457,6 +385,9 @@ module.exports = function(app,banco){
             })
         }
     })
+
+
+
 
     app.delete('/Instituicao/',(request,response) => {
         const Cnpj = request.body.Cnpj

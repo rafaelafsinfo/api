@@ -70,6 +70,36 @@ module.exports = class Usuario {
         return operacaoAssincrona;
     }
 
+
+    async update() {
+        const md5 = require("md5");
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            const id = this.getId() 
+            const p_nome = this.getPNome();
+            const sobrenome = this.getSobrenome();
+            const username = this.getUsername();
+            const senha = md5(this.getSenha());
+            const cidade = this.getCidade();
+            const estado = this.getEstado();
+
+            const parametros = [p_nome,sobrenome,username,senha,cidade,estado,id];
+
+            const sql = "update Usuario set p_nome=?,sobrenome=?,username=?,senha=?,cidade=?,estado=? where id = ?";
+
+            this._banco.query(sql, parametros, function (error, result) {
+                if (error) {
+                    console.log("reject => Usuario.update(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Usuario.update(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+        return operacaoAssincrona
+    }
+
+
     async update() {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
