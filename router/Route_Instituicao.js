@@ -263,11 +263,11 @@ module.exports = function(app,banco){
         const md5 = require('md5')
         const Cnpj = request.body.Cnpj
         const NomeInst = request.body.NomeInst
-        const rua = request.body.rua
-        const numero = request.body.numero
-        const bairro = request.body.bairro
-        const cidade = request.body.cidade
-        const estado = request.body.estado
+        const rua = request.body.Rua
+        const numero = request.body.Numero
+        const bairro = request.body.Bairro
+        const cidade = request.body.Cidade
+        const estado = request.body.Estado
         const CEP = request.body.CEP
         const Descricao = request.body.Descricao
 
