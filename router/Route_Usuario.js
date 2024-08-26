@@ -308,8 +308,6 @@ module.exports = function(app,banco){
         const p_nome = request.body.p_nome
         const sobrenome = request.body.sobrenome
         const username = request.body.username
-        const email = request.body.email
-        const senha = request.body.senha
         const cidade = request.body.cidade
         const estado = request.body.estado
 
@@ -345,22 +343,6 @@ module.exports = function(app,banco){
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(email == ""){
-            const resposta={
-                status: true,
-                msg: 'o email não pode ser vazio',
-                codigo: '001',
-                dados: "{}"
-            }
-            response.status(200).send(resposta);
-        }else if(senha == ""){
-            const resposta={
-                status: true,
-                msg: 'a senha não pode ser vazio',
-                codigo: '001',
-                dados: "{}"
-            }
-            response.status(200).send(resposta);
         }else if(cidade == ""){
             const resposta={
                 status: true,
@@ -383,8 +365,6 @@ module.exports = function(app,banco){
             usuario.setPNome(p_nome)
             usuario.setSobrenome(sobrenome)
             usuario.setUsername(username)
-            usuario.setEmail(email)
-            usuario.setSenha(senha)
             usuario.setCidade(cidade)
             usuario.setEstado(estado)
             usuario.update().then((resultadosBanco) =>{
@@ -397,7 +377,6 @@ module.exports = function(app,banco){
                         p_nome: usuario.getPNome(),
                         sobrenome: usuario.getSobrenome(),
                         username: usuario.getUsername(),
-                        email: usuario.getEmail(),
                         cidade: usuario.getCidade(),
                         estado: usuario.getEstado()
                     },
