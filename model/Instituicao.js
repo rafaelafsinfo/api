@@ -92,8 +92,8 @@ module.exports = class Instituicao {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const Cnpj = this.getCnpj() 
-            const nome_inst = this.getNomeInst();
-            const rua = this.getRua()
+            const NomeInst = this.getNomeInst();
+            const Rua = this.getRua()
             const numero = this.getNumero()
             const bairro = this.getBairro()
             const cidade = this.getCidade();
@@ -102,15 +102,15 @@ module.exports = class Instituicao {
             const descricao = this.getDescricao()
 
             const parametros = [
-                Cnpj,
-                nome_inst,
-                rua,
+                NomeInst,
+                Rua,
                 numero,
                 bairro,
                 cidade,
                 estado,
                 cep,
-                descricao
+                descricao,
+                Cnpj
             ];
             const sql = "update Instituicao set NomeInst=?,Rua=?,Numero=?,Bairro=?,Cidade=?,Estado=?,CEP=?,Descricao=? where Cnpj =?;";
 
