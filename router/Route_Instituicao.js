@@ -127,11 +127,11 @@ module.exports = function(app,banco){
                         Cnpj: resultadosBanco.Cnpj,
                         NomeInst: instituicao.getNomeInst(),
                         Email: instituicao.getEmail(),
-                        rua: instituicao.getRua(),
-                        numero: instituicao.getNumero(),
-                        bairro: instituicao.getBairro(),
-                        cidade: instituicao.getCidade(),
-                        estado: instituicao.getEstado(),
+                        Rua: instituicao.getRua(),
+                        Numero: instituicao.getNumero(),
+                        Bairro: instituicao.getBairro(),
+                        Cidade: instituicao.getCidade(),
+                        Estado: instituicao.getEstado(),
                         CEP: instituicao.getCEP(),
                         Descricao: instituicao.getDescricao()
                     }
