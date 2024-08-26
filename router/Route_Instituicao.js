@@ -361,7 +361,7 @@ module.exports = function(app,banco){
                     msg: 'Executado com sucesso',
                     codigo: '002',
                     dados: {
-                        Cnpj: resultadosBanco.Cnpj,
+                        Cnpj: instituicao.getCnpj(),
                         NomeInst: instituicao.getNomeInst(),
                         rua: instituicao.getRua(),
                         numero: instituicao.getNumero(),
