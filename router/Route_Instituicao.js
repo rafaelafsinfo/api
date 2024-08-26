@@ -259,7 +259,7 @@ module.exports = function(app,banco){
 
 
 
-    app.put('/Instituicao/',(request,response) => {
+    app.patch('/Instituicao/',(request,response) => {
         const md5 = require('md5')
         const Cnpj = request.body.Cnpj
         const NomeInst = request.body.NomeInst
