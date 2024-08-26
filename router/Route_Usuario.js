@@ -89,7 +89,7 @@ module.exports = function(app,banco){
                     msg: 'Executado com sucesso',
                     codigo: '002',
                     dados: {
-                        id: usuario.getId(),
+                        id: resultadosBanco.id,
                         p_nome: usuario.getPNome(),
                         sobrenome: usuario.getSobrenome(),
                         username: usuario.getUsername(),
