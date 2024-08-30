@@ -260,6 +260,131 @@ module.exports = function(app,banco){
 
 
     app.patch('/Instituicao/',(request,response) => {
+        const Cnpj = request.body.Cnpj
+        const NomeInst = request.body.NomeInst
+        const rua = request.body.Rua
+        const numero = request.body.Numero
+        const bairro = request.body.Bairro
+        const cidade = request.body.Cidade
+        const estado = request.body.Estado
+        const CEP = request.body.CEP
+        const Descricao = request.body.Descricao
+
+
+        if (Cnpj == ""){
+            const resposta={
+                status: true,
+                msg: 'o Cnpj não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(NomeInst == ""){
+            const resposta={
+                status: true,
+                msg: 'o nome não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(rua == ""){
+            const resposta={
+                status: true,
+                msg: 'a rua não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(numero == ""){
+            const resposta={
+                status: true,
+                msg: 'o numero não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(bairro == ""){
+            const resposta={
+                status: true,
+                msg: 'o bairro não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(cidade == ""){
+            const resposta={
+                status: true,
+                msg: 'a cidade não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(estado == ""){
+            const resposta={
+                status: true,
+                msg: 'o estado não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(CEP == ""){
+            const resposta={
+                status: true,
+                msg: 'o CEP não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(Descricao == ""){
+            const resposta={
+                status: true,
+                msg: 'a Descricao não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else{
+            const instituicao = new Instituicao(banco)
+            instituicao.setCnpj(Cnpj)
+            instituicao.setNomeInst(NomeInst)
+            instituicao.setRua(rua)
+            instituicao.setNumero(numero)
+            instituicao.setBairro(bairro)
+            instituicao.setCidade(cidade)
+            instituicao.setEstado(estado)
+            instituicao.setCEP(CEP)
+            instituicao.setDescricao(Descricao)
+            instituicao.update().then((resultadosBanco) =>{
+                const resposta = {
+                    status: true,
+                    msg: 'Executado com sucesso',
+                    codigo: '002',
+                    dados: {
+                        Cnpj: instituicao.getCnpj(),
+                        NomeInst: instituicao.getNomeInst(),
+                        rua: instituicao.getRua(),
+                        numero: instituicao.getNumero(),
+                        bairro: instituicao.getBairro(),
+                        cidade: instituicao.getCidade(),
+                        estado: instituicao.getEstado(),
+                        CEP: instituicao.getCEP(),
+                        Descricao: instituicao.getDescricao()
+                    },
+                }
+                response.status(200).send(resposta)
+            }).catch((erro) =>{
+                const resposta = {
+                    status: false,
+                    msg: 'erro ao executar',
+                    codigo: '010',
+                    dados: erro,
+                  }
+                  console.error(erro)
+                  response.status(200).send(resposta);
+            })
+        }
+    })
+    app.put('/Instituicao/',(request,response) => {
         const md5 = require('md5')
         const Cnpj = request.body.Cnpj
         const NomeInst = request.body.NomeInst
@@ -366,7 +491,7 @@ module.exports = function(app,banco){
             instituicao.setEstado(estado)
             instituicao.setCEP(CEP)
             instituicao.setDescricao(Descricao)
-            instituicao.update().then((resultadosBanco) =>{
+            instituicao.updatepass().then((resultadosBanco) =>{
                 const resposta = {
                     status: true,
                     msg: 'Executado com sucesso',
