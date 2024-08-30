@@ -71,9 +71,8 @@ module.exports = class Usuario {
     }
 
 
-    async update(a) {
+    async updatepass() {
         const operacaoAssincrona = new Promise((resolve, reject) => {
-            console.log(a)
             const id = this.getId() 
             const p_nome = this.getPNome();
             const sobrenome = this.getSobrenome();

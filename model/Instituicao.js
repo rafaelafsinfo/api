@@ -89,6 +89,43 @@ module.exports = class Instituicao {
     }
 
     async update() {
+        const operacaoAssincrona = new Promise((resolve, reject) => {
+            const Cnpj = this.getCnpj() 
+            const NomeInst = this.getNomeInst();
+            const Rua = this.getRua()
+            const numero = this.getNumero()
+            const bairro = this.getBairro()
+            const cidade = this.getCidade();
+            const estado = this.getEstado();
+            const cep = this.getCEP()
+            const descricao = this.getDescricao()
+
+            const parametros = [
+                NomeInst,
+                Rua,
+                numero,
+                bairro,
+                cidade,
+                estado,
+                cep,
+                descricao,
+                Cnpj
+            ];
+            const sql = "update Instituicao set NomeInst=?,Rua=?,Numero=?,Bairro=?,Cidade=?,Estado=?,CEP=?,Descricao=? where Cnpj =?;";
+
+            this._banco.query(sql, parametros, function (error, result) {
+                if (error) {
+                    console.log("reject => Instituicao.update(): " + JSON.stringify(error))
+                    reject(error);
+                } else {
+                    console.log("resolve => Instituicao.update(): " + JSON.stringify(result))
+                    resolve(result);
+                }
+            });
+        });
+        return operacaoAssincrona;
+    }
+    async updatepass() {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const Cnpj = this.getCnpj() 

@@ -275,7 +275,100 @@ module.exports = function(app,banco){
             usuario.setSenha(senha)
             usuario.setCidade(cidade)
             usuario.setEstado(estado)
-            usuario.update('opa').then((resultadosBanco) =>{
+            usuario.updatepass().then((resultadosBanco) =>{
+                const resposta = {
+                    status: true,
+                    msg: 'Executado com sucesso',
+                    codigo: '002',
+                    dados: {
+                        id: resultadosBanco.id,
+                        p_nome: usuario.getPNome(),
+                        sobrenome: usuario.getSobrenome(),
+                        username: usuario.getUsername(),
+                        cidade: usuario.getCidade(),
+                        estado: usuario.getEstado()
+                    },
+                }
+                response.status(200).send(resposta)
+            }).catch((erro) =>{
+                const resposta = {
+                    status: false,
+                    msg: 'erro ao executar',
+                    codigo: '010',
+                    dados: erro,
+                  }
+                  console.error(erro)
+                  response.status(200).send(resposta);
+            })
+        }
+    })
+    app.patch('/Usuario', (request, response) => {
+        const id = request.body.id
+        const p_nome = request.body.p_nome
+        const sobrenome = request.body.sobrenome
+        const username = request.body.username
+        const senha = request.body.senha
+        const cidade = request.body.cidade
+        const estado = request.body.estado
+
+        if (id == ""){
+            const resposta={
+                status: true,
+                msg: 'o id não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(p_nome == ""){
+            const resposta={
+                status: true,
+                msg: 'o primeiro nome não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(sobrenome == ""){
+            const resposta={
+                status: true,
+                msg: 'o sobrenome não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(username == ""){
+            const resposta={
+                status: true,
+                msg: 'o nome de usuario não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(cidade == ""){
+            const resposta={
+                status: true,
+                msg: 'a cidade não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else if(estado == ""){
+            const resposta={
+                status: true,
+                msg: 'o estado não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }else{
+            const usuario = new Usuario(banco)
+            usuario.setId(id)
+            usuario.setPNome(p_nome)
+            usuario.setSobrenome(sobrenome)
+            usuario.setUsername(username)
+            usuario.setSenha(senha)
+            usuario.setCidade(cidade)
+            usuario.setEstado(estado)
+            usuario.updatepass().then((resultadosBanco) =>{
                 const resposta = {
                     status: true,
                     msg: 'Executado com sucesso',
