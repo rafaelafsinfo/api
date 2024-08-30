@@ -106,13 +106,14 @@ module.exports = class Usuario {
             const p_nome = this.getPNome();
             const sobrenome = this.getSobrenome();
             const username = this.getUsername();
+            const senha = md5(this.getSenha())
             const cidade = this.getCidade();
             const estado = this.getEstado();
 
 
-            const parametros = [p_nome,sobrenome,username,cidade,estado,id];
+            const parametros = [p_nome,sobrenome,username,senha,cidade,estado,id];
 
-            const sql = "update Usuario set p_nome=?,sobrenome=?,username=?,cidade=?,estado=? where id = ?";
+            const sql = "update Usuario set p_nome=?,sobrenome=?,username=?,cidade=?,senha=?,estado=? where id = ?";
 
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {

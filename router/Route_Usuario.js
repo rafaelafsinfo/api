@@ -214,6 +214,7 @@ module.exports = function(app,banco){
         const p_nome = request.body.p_nome
         const sobrenome = request.body.sobrenome
         const username = request.body.username
+        const senha = request.body.senha
         const cidade = request.body.cidade
         const estado = request.body.estado
 
@@ -271,6 +272,7 @@ module.exports = function(app,banco){
             usuario.setPNome(p_nome)
             usuario.setSobrenome(sobrenome)
             usuario.setUsername(username)
+            usuario.setSenha(senha)
             usuario.setCidade(cidade)
             usuario.setEstado(estado)
             usuario.update('opa').then((resultadosBanco) =>{

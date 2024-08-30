@@ -263,6 +263,7 @@ module.exports = function(app,banco){
         const md5 = require('md5')
         const Cnpj = request.body.Cnpj
         const NomeInst = request.body.NomeInst
+        const Senha = request.body.Senha
         const rua = request.body.Rua
         const numero = request.body.Numero
         const bairro = request.body.Bairro
@@ -288,7 +289,16 @@ module.exports = function(app,banco){
                 dados: "{}"
             }
             response.status(200).send(resposta);
-        }else if(rua == ""){
+        }else if(Senha == ""){
+            const resposta={
+                status: true,
+                msg: 'a senha não pode ser vazio',
+                codigo: '001',
+                dados: "{}"
+            }
+            response.status(200).send(resposta);
+        }
+        else if(rua == ""){
             const resposta={
                 status: true,
                 msg: 'a rua não pode ser vazio',
@@ -348,6 +358,7 @@ module.exports = function(app,banco){
             const instituicao = new Instituicao(banco)
             instituicao.setCnpj(Cnpj)
             instituicao.setNomeInst(NomeInst)
+            instituicao.setSenha(Senha)
             instituicao.setRua(rua)
             instituicao.setNumero(numero)
             instituicao.setBairro(bairro)
