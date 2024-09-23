@@ -227,37 +227,24 @@ module.exports = function(app,banco){
 
             const usuario = new Usuario(banco)
             usuario.setEmail(email)
-
-
-            usuario.sendrec().then((respostarec) => {
-                console.log(respostarec)
-                //respostarec.status
-                if (true == true) { 
-                    const resposta = {
-                        resposta : respostarec.data,
-                        mensagem: 'email enviado'
-                    }
-                    response.status(200).send(resposta)
-            } else {
+            usuario.sendrec().then((resultadosBanco) => {
                 const resposta = {
-                status: false,
-                msg: "erro ao enviar",
-                codigo: 401,
+                    status: true,
+                    msg: 'Executado com sucesso',
+                    dados: resultadosBanco,
+                    codigo: '003'
                 }
-                console.log(resposta)
-                response.status(404).send(resposta)
-            }
+                response.status(200).send(resposta)
             }).catch((erro) => {
-            const resposta = {
-                status: false,
-                msg: 'erro ao executar',
-                codigo: '005',
-                dados: erro,
-            }
-
-
-            response.status(201).send(erro);
-            });
+                const resposta = {
+                    status: false,
+                    codigo: '004',
+                    msg: 'erro ao executar',
+                    dados: erro
+                  }
+                  console.error(erro)
+                  response.status(200).send(resposta)
+            })
         }
     })
 
