@@ -1,6 +1,6 @@
 const { promise } = require("bcrypt/promises");
-const EmailService = require('../services/email.service');
-
+require('dotenv').config()
+const nodemailer = require('nodemailer')
 module.exports = class Usuario {
     constructor(banco){
         this._banco = banco;
@@ -13,6 +13,15 @@ module.exports = class Usuario {
         this._cidade = null;
         this._estado = null;
         this.emailService = new EmailService();
+        this.transporter = nodemailer.createTransport({
+            host:'smtp.gmail.com',
+            port:587,
+            secure:false,
+            auth:{
+                user: process.env.email,
+                pass: process.env.senhaemail
+            }
+        })
 
     }
 
@@ -153,21 +162,10 @@ module.exports = class Usuario {
         return operacaoAssincrona;
     }
 
-    async sendrec(){
-        const nodemailer = require('nodemailer')
-        
+    async sendrec(){        
         console.log('depuracao')
         const operacaoAssincrona = new promise((resolve,reject) => {
             const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
-            const transporter = nodemailer.createTransport({
-                host:'smtp.gmail.com',
-                port:587,
-                secure:false,
-                auth:{
-                    user: process.env.email,
-                    pass: process.env.senhaemail
-                }
-            })
             const from = 'awstccsde@gmail.com'
             const to = this.getEmail()
             const subject = 'Recuperação de Senha'
@@ -179,11 +177,22 @@ module.exports = class Usuario {
             sistema de doação emergencial`;
 
             try {
-                const info = this.emailService.sendEmail(from, to, subject, text);
-                resolve(codigo)
-            } catch (error) {
-                
-            }
+
+                const mailOptions = {
+                  from,
+                  to,
+                  subject,
+                  text
+                };
+                const info = this.transporter.sendMail(mailOptions);
+                return {
+                    info: info,
+                    codigo: codigo
+                };
+              } catch (err) {
+                console.log(err);
+                return null;
+              }
         })
         return operacaoAssincrona;
     }

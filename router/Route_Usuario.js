@@ -1,11 +1,10 @@
 const { request, response } = require('express');
 const Usuario = require('../model/Usuario');
 const { v4: uuidv4 } = require('uuid');
-const EmailService = require('../services/email.service');
 
 module.exports = function(app,banco){
     const Usuario = require('../model/Usuario')
-    
+
     app.post('/Usuario',(request,response) =>{
         console.log("rota => POST: /Usuario");
         const id = uuidv4()
@@ -210,49 +209,41 @@ module.exports = function(app,banco){
         }
     })
     app.post('/sendrec/Usuario',(request,response) => {
-        constructor() 
-        {
-            this.emailService = new EmailService();
-        }
-            
         console.log("rota: POST: /sendrec/aluno")
         const email = request.body.email
         if (email == null) {
-            
+            //cria um objeto json de resposta.
             const resposta = {
               status: false,
               msg: 'email não podem ser vazio',
               codigo: '001',
               dados: "{}",
             }
-            
+            //envia a resposta para o cliente
+            //http code = 200
             response.status(200).send(resposta);
 
           }else{
-            const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
-            const from = 'seu_email@gmail.com';
-            const to = email;
-            const subject = 'Recuperação de Senha'
-            const text = `**olá**
-            Este endereço de e-mail foi informado para recuperação digite o codigo abaixo dentrodo aplicativo para prosseguir com a recuperação da mesma
-            
-            ${codigo}
-            
-            sistema de doação emergencial`
-            try {
-                const info = this.emailService.sendEmail(from, to, subject, text);
+              usuario.setEmail(email)
+              try {
+                  
+                const usuario = new Usuario(banco)
+                const info = usuario.sendrec();
                 const resposta = {
                     status: true,
-                    msg: "Email enviado com sucesso!",
-                    dados: info,
-                    codigo: 200,
-                    }
-                    console.log(resposta)
+                    msg: `Email enviado com sucesso!`,
+                    dados: info.info,
+                    codigo: info.codigo
+                }
                 response.send(resposta);
-            } catch (error) {
-                console.log(error);
+            
+              } catch (err) {
+            
+                console.log(err);
+            
                 res.status(500).send('Erro ao enviar email');
-            }
+            
+              }
         }
     })
 
