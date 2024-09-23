@@ -218,18 +218,18 @@ module.exports = function(app,banco){
         console.log("rota: POST: /sendrec/aluno")
         const email = request.body.email
         if (email == null) {
-            //cria um objeto json de resposta.
+            
             const resposta = {
               status: false,
               msg: 'email não podem ser vazio',
               codigo: '001',
               dados: "{}",
             }
-            //envia a resposta para o cliente
-            //http code = 200
+            
             response.status(200).send(resposta);
 
           }else{
+            const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
             const from = 'seu_email@gmail.com';
             const to = email;
             const subject = 'Recuperação de Senha'
