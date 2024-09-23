@@ -224,10 +224,10 @@ module.exports = function(app,banco){
             response.status(200).send(resposta);
 
           }else{
-              usuario.setEmail(email)
               try {
                   
-                const usuario = new Usuario(banco)
+                  const usuario = new Usuario(banco)
+                  usuario.setEmail(email)
                 const info = usuario.sendrec();
                 const resposta = {
                     status: true,
