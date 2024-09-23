@@ -232,8 +232,8 @@ module.exports = function(app,banco){
                 const resposta = {
                     status: true,
                     msg: `Email enviado com sucesso!`,
-                    dados: info.info,
-                    codigo: info.codigo
+                    dados: info,
+                    codigo: 200
                 }
                 response.send(resposta);
             
