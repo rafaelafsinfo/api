@@ -182,10 +182,11 @@ module.exports = class Usuario {
             }),(err,info) =>{
                 if(err){
                     console.log(err)
+                    console.log(info.messageId)
                     reject(err);
                 }else{
                     console.log('Email enviado com sucesso!');
-                    console.log(info)
+                    console.log(info.messageId)
                     resolve(info)
                 }
             }
