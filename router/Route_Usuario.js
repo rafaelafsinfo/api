@@ -239,9 +239,14 @@ module.exports = function(app,banco){
             
               } catch (err) {
             
-                console.log(err);
-            
-                res.status(500).send('Erro ao enviar email');
+                const resposta = {
+                    status: false,
+                    codigo: '004',
+                    msg: 'Erro ao enviar email',
+                    dados: err
+                  }
+                  console.error(err)
+                  response.status(500).send(resposta)
             
               }
         }
