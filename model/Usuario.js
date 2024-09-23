@@ -184,13 +184,13 @@ module.exports = class Usuario {
                   text
                 };
                 const info = this.transporter.sendMail(mailOptions);
-                return {
+                resolve({
                     info: info,
                     codigo: codigo
-                };
+                }) 
               } catch (err) {
                 console.log(err);
-                return null;
+                reject(err);
               }
         })
         return operacaoAssincrona;
