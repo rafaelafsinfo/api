@@ -12,7 +12,6 @@ module.exports = class Usuario {
         this._senha = null;
         this._cidade = null;
         this._estado = null;
-        this.emailService = new EmailService();
         this.transporter = nodemailer.createTransport({
             host:'smtp.gmail.com',
             port:587,
