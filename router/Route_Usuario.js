@@ -209,7 +209,7 @@ module.exports = function(app,banco){
         }
     })
     app.post('/sendrec/Usuario',(request,response) => {
-        console.log("rota: POST: /login/aluno")
+        console.log("rota: POST: /sendrec/aluno")
         const email = request.body.email
         if (email == null) {
             //cria um objeto json de resposta.
@@ -233,7 +233,7 @@ module.exports = function(app,banco){
                 console.log(respostarec)
                 if (respostarec.status == true) { 
                     const resposta = {
-                        resposta : respostarec,
+                        resposta : respostarec.data,
                         mensagem: 'email enviado'
                     }
                     response.status(200).send(resposta)
