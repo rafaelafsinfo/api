@@ -208,6 +208,57 @@ module.exports = function(app,banco){
             });
         }
     })
+    app.post('/sendrec/Usuario',(request,response) => {
+        console.log("rota: POST: /login/aluno")
+        const email = request.body.email
+        if (email == null) {
+            //cria um objeto json de resposta.
+            const resposta = {
+              status: false,
+              msg: 'email não podem ser vazio',
+              codigo: '001',
+              dados: "{}",
+            }
+            //envia a resposta para o cliente
+            //http code = 200
+            response.status(200).send(resposta);
+
+          }else{
+
+            const usuario = new Usuario(banco)
+            usuario.setEmail(email)
+
+
+            usuario.sendrec().then((respostarec) => {
+                console.log(respostarec)
+                if (respostarec.status == true) { 
+                    const resposta = {
+                        resposta : respostarec,
+                        mensagem: 'email enviado'
+                    }
+                    response.status(200).send(resposta)
+            } else {
+                const resposta = {
+                status: false,
+                msg: "erro ao enviar",
+                codigo: 401,
+                }
+                console.log(resposta)
+                response.status(404).send(resposta)
+            }
+            }).catch((erro) => {
+            const resposta = {
+                status: false,
+                msg: 'erro ao executar',
+                codigo: '005',
+                dados: erro,
+            }
+
+
+            response.status(201).send(erro);
+            });
+        }
+    })
 
     app.patch('/Usuario', (request, response) => {
         const id = request.body.id

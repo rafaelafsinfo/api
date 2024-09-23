@@ -1,3 +1,5 @@
+const { promise } = require("bcrypt/promises");
+
 module.exports = class Usuario {
     constructor(banco){
         this._banco = banco;
@@ -146,6 +148,48 @@ module.exports = class Usuario {
                 }
             });
         });
+        return operacaoAssincrona;
+    }
+
+    async sendrec(){
+        const nodemailer = require('nodemailer')
+        const operacaoAssincrona = new promise((resolve,reject) => {
+            const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
+            const transporter = nodemailer.createTransport({
+                host:'smtp.gmail.com',
+                port:587,
+                secure:false,
+                auth:{
+                    user: process.env.email,
+                    pass: process.env.senhaemail
+                }
+            })
+            const from = 'awstccsde@gmail.com'
+            const to = this.getEmail()
+            const subject = 'Recuperação de Senha'
+            const text = `**olá**
+            Este endereço de e-mail foi informado para recuperação digite o codigo abaixo dentrodo aplicativo para prosseguir com a recuperação da mesma
+            
+            ${codigo}
+            
+            sistema de doação emergencial`;
+
+            transporter.sendMail({
+                from,
+                to,
+                subject,
+                text
+            }),(err,info) =>{
+                if(err){
+                    console.log(err)
+                    reject(err);
+                }else{
+                    console.log('Email enviado com sucesso!');
+                    console.log(info)
+                    resolve(info)
+                }
+            }
+        })
         return operacaoAssincrona;
     }
 
