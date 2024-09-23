@@ -153,8 +153,8 @@ module.exports = class Usuario {
 
     async sendrec(){
         const nodemailer = require('nodemailer')
+        console.log('depuracao')
         const operacaoAssincrona = new promise((resolve,reject) => {
-            console.log('depuracao')
             const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
             const transporter = nodemailer.createTransport({
                 host:'smtp.gmail.com',
