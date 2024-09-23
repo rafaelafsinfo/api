@@ -1,4 +1,5 @@
 const { promise } = require("bcrypt/promises");
+const EmailService = require('../services/email.service');
 
 module.exports = class Usuario {
     constructor(banco){
@@ -11,6 +12,7 @@ module.exports = class Usuario {
         this._senha = null;
         this._cidade = null;
         this._estado = null;
+        this.emailService = new EmailService();
 
     }
 
@@ -153,6 +155,7 @@ module.exports = class Usuario {
 
     async sendrec(){
         const nodemailer = require('nodemailer')
+        
         console.log('depuracao')
         const operacaoAssincrona = new promise((resolve,reject) => {
             const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
@@ -175,21 +178,11 @@ module.exports = class Usuario {
             
             sistema de doação emergencial`;
 
-            transporter.sendMail({
-                from,
-                to,
-                subject,
-                text
-            }),(err,info) =>{
-                if(err){
-                    console.log(err)
-                    console.log(info.messageId)
-                    reject(err);
-                }else{
-                    console.log('Email enviado com sucesso!');
-                    console.log(info.messageId)
-                    resolve(info)
-                }
+            try {
+                const info = this.emailService.sendEmail(from, to, subject, text);
+                resolve(codigo)
+            } catch (error) {
+                
             }
         })
         return operacaoAssincrona;

@@ -1,10 +1,11 @@
 const { request, response } = require('express');
 const Usuario = require('../model/Usuario');
 const { v4: uuidv4 } = require('uuid');
+const EmailService = require('../services/email.service');
 
 module.exports = function(app,banco){
     const Usuario = require('../model/Usuario')
-
+    
     app.post('/Usuario',(request,response) =>{
         console.log("rota => POST: /Usuario");
         const id = uuidv4()
@@ -209,6 +210,11 @@ module.exports = function(app,banco){
         }
     })
     app.post('/sendrec/Usuario',(request,response) => {
+        constructor() 
+        {
+            this.emailService = new EmailService();
+        }
+            
         console.log("rota: POST: /sendrec/aluno")
         const email = request.body.email
         if (email == null) {
@@ -224,27 +230,22 @@ module.exports = function(app,banco){
             response.status(200).send(resposta);
 
           }else{
-            const usuario = new Usuario(banco)
-            usuario.setEmail(email)
+            const from = 'seu_email@gmail.com';
+            const to = email;
+            const subject = 'Recuperação de Senha'
+            const text = `**olá**
+            Este endereço de e-mail foi informado para recuperação digite o codigo abaixo dentrodo aplicativo para prosseguir com a recuperação da mesma
             
-            usuario.sendrec().then((resultadosBanco) => {
-                const resposta = {
-                    status: true,
-                    msg: 'Executado com sucesso',
-                    dados: resultadosBanco,
-                    codigo: '003'
-                }
-                response.status(200).send(resposta)
-            }).catch((erro) => {
-                const resposta = {
-                    status: false,
-                    codigo: '004',
-                    msg: 'erro ao executar',
-                    dados: erro
-                  }
-                  console.error(erro)
-                  response.status(200).send(resposta)
-            })
+            ${codigo}
+            
+            sistema de doação emergencial`
+            try {
+                const info = this.emailService.sendEmail(from, to, subject, text);
+                response.send(`Email enviado com sucesso!`);
+            } catch (error) {
+                console.log(error);
+                res.status(500).send('Erro ao enviar email');
+            }
         }
     })
 
