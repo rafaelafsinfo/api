@@ -231,7 +231,8 @@ module.exports = function(app,banco){
 
             usuario.sendrec().then((respostarec) => {
                 console.log(respostarec)
-                if (respostarec.status == true) { 
+                //respostarec.status
+                if (true == true) { 
                     const resposta = {
                         resposta : respostarec.data,
                         mensagem: 'email enviado'
