@@ -241,7 +241,14 @@ module.exports = function(app,banco){
             sistema de doação emergencial`
             try {
                 const info = this.emailService.sendEmail(from, to, subject, text);
-                response.send(`Email enviado com sucesso!`);
+                const resposta = {
+                    status: true,
+                    msg: "Email enviado com sucesso!",
+                    dados: info,
+                    codigo: 200,
+                    }
+                    console.log(resposta)
+                response.send(resposta);
             } catch (error) {
                 console.log(error);
                 res.status(500).send('Erro ao enviar email');
