@@ -163,20 +163,20 @@ module.exports = class Usuario {
 
     async sendrec(){        
         console.log('depuracao')
-        const operacaoAssincrona = new promise((resolve,reject) => {
+        const operacaoAssincrona = new Promise((resolve,reject) => {
             const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
             const from = 'awstccsde@gmail.com'
             const to = this.getEmail()
             const subject = 'Recuperação de Senha'
             const text = `**olá**
-            Este endereço de e-mail foi informado para recuperação digite o codigo abaixo dentrodo aplicativo para prosseguir com a recuperação da mesma
+            Este endereço de e-mail foi informado para recuperação digite o codigo abaixo dentro do aplicativo para prosseguir com a recuperação da mesma
             
             ${codigo}
             
             sistema de doação emergencial`;
-
+    
             try {
-
+    
                 const mailOptions = {
                   from,
                   to,
