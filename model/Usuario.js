@@ -13,15 +13,14 @@ module.exports = class Usuario {
         this._cidade = null;
         this._estado = null;
         this.transporter = nodemailer.createTransport({
-            pool:true,
-            host:'smtp.gmail.com',
-            port:465,
-            secure:true,
-            auth:{
-                user: 'sistemadedoacaoemergencial@proton.me',
-                pass: '!!p64g:twTXCgyL'
+            host: 'smtp.protonmail.com',
+            port: 587,
+            secure: false, // or 'STARTTLS'
+            auth: {
+              user: 'sistemadedoacaoemergencial@proton.me',
+              pass: '!!p64g:twTXCgyL'
             }
-        })
+          });
 
     }
 
