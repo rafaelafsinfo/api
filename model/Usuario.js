@@ -17,8 +17,8 @@ module.exports = class Usuario {
             port:587,
             secure:false,
             auth:{
-                user: 'awstccsde@gmail.com',
-                pass: 'Z26JirpBv1Hn'
+                user: 'sistemadedoacaoemergencial@proton.me',
+                pass: '!!p64g:twTXCgyL'
             }
         })
 
