@@ -13,7 +13,7 @@ module.exports = class Usuario {
         this._cidade = null;
         this._estado = null;
         this.transporter = nodemailer.createTransport({
-            host: 'smtp.protonmail.com',
+            host: 'smtp.proton.com',
             port: 587,
             secure: false, // or 'STARTTLS'
             auth: {
