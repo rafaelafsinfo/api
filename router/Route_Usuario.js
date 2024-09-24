@@ -1,5 +1,4 @@
 const { request, response } = require('express');
-const Usuario = require('../model/Usuario');
 const { v4: uuidv4 } = require('uuid');
 
 module.exports = function(app,banco){

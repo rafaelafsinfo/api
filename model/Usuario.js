@@ -183,11 +183,12 @@ module.exports = class Usuario {
                   subject,
                   text
                 };
-                const info = this.transporter.sendMail(mailOptions);
-                resolve({
+                const info = this.transporter.sendMail(mailOptions)
+                const retorno = {
                     info: info,
                     codigo: codigo
-                }) 
+                }
+                resolve(JSON.stringify(retorno)) 
               } catch (err) {
                 console.log(err);
                 reject(err);
