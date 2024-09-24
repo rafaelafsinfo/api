@@ -1,5 +1,5 @@
+require('dotenv')
 const { promise } = require("bcrypt/promises");
-require('dotenv').config()
 const nodemailer = require('nodemailer')
 module.exports = class Usuario {
     constructor(banco){
@@ -17,8 +17,8 @@ module.exports = class Usuario {
             port:587,
             secure:false,
             auth:{
-                user: process.env.email,
-                pass: process.env.senhaemail
+                user: 'awstccsde@gmail.com',
+                pass: 'Z26JirpBv1Hn'
             }
         })
 
