@@ -1,5 +1,6 @@
 require('dotenv')
 const { promise } = require("bcrypt/promises");
+const { response } = require('express');
 const nodemailer = require('nodemailer')
 module.exports = class Usuario {
     constructor(banco){
@@ -163,36 +164,20 @@ module.exports = class Usuario {
 
     async sendrec(){        
         console.log('depuracao')
+        const emailjs = require('@emailjs/browser')
         const operacaoAssincrona = new Promise((resolve,reject) => {
             const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
-            const from = 'awstccsde@gmail.com'
             const to = this.getEmail()
-            const subject = 'Recuperação de Senha'
-            const text = `**olá**
-            Este endereço de e-mail foi informado para recuperação digite o codigo abaixo dentro do aplicativo para prosseguir com a recuperação da mesma
-            
-            ${codigo}
-            
-            sistema de doação emergencial`;
-    
-            try {
-    
-                const mailOptions = {
-                  from,
-                  to,
-                  subject,
-                  text
-                };
-                const info = this.transporter.sendMail(mailOptions)
-                const retorno = {
-                    info: info,
-                    codigo: codigo
-                }
-                resolve(JSON.stringify(retorno)) 
-              } catch (err) {
-                console.log(err);
-                reject(err);
-              }
+            const templateParams = {
+                to: to,
+                codigo: codigo
+            }
+            emailjs.send("service_329817j","template-bn1nlsg",templateParams).then((response) => {
+                console.log("enviado"+response)
+                resolve(response)
+            },(err) => {
+                console.error(err)
+            })
         })
         return operacaoAssincrona;
     }
