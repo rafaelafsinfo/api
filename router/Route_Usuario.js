@@ -227,14 +227,24 @@ module.exports = function(app,banco){
                   
                   const usuario = new Usuario(banco)
                   usuario.setEmail(email)
-                const info = usuario.sendrec();
-                const resposta = {
-                    status: true,
-                    msg: `Email enviado com sucesso!`,
-                    dados: info,
-                    codigo: 200
-                }
-                response.send(resposta);
+                  usuario.sendrec(email).then((resultadosBanco) => {
+                    const resposta = {
+                        status: true,
+                        msg: 'Executado com sucesso',
+                        dados: resultadosBanco,
+                        codigo: '003'
+                    }
+                    response.status(200).send(resposta)
+                }).catch((erro) => {
+                    const resposta = {
+                        status: false,
+                        codigo: '004',
+                        msg: 'erro ao executar',
+                        dados: erro
+                      }
+                      console.error(erro)
+                      response.status(200).send(resposta)
+                })
             
               } catch (err) {
             

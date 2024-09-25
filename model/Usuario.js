@@ -163,10 +163,10 @@ module.exports = class Usuario {
         return operacaoAssincrona;
     }
 
-    async sendrec(){        
+    async sendrec(email){        
         const operacaoAssincrona = new Promise((resolve,reject) => {
             const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
-            const to = this.getEmail()
+            const to = email
             console.log(codigo)
             console.log(to)
             const templateParams = {
