@@ -2,6 +2,7 @@ require('dotenv')
 const { promise } = require("bcrypt/promises");
 const { response } = require('express');
 const nodemailer = require('nodemailer')
+const emailjs = require('emailjs')
 module.exports = class Usuario {
     constructor(banco){
         this._banco = banco;
@@ -164,7 +165,6 @@ module.exports = class Usuario {
 
     async sendrec(){        
         console.log('depuracao')
-        const emailjs = require('@emailjs/browser')
         const operacaoAssincrona = new Promise((resolve,reject) => {
             const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
             const to = this.getEmail()
