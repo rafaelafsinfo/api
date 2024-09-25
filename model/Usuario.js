@@ -172,7 +172,7 @@ module.exports = class Usuario {
                 to: to,
                 codigo: codigo
             }
-            emailjs.send("service_329817j","template-bn1nlsg",templateParams).then((response) => {
+            emailjs.send("service_329817j","template-bn1nlsg",templateParams,"wWqMRT6VQkphMFS09").then((response) => {
                 console.log("enviado"+response)
                 resolve(response)
             },(err) => {
