@@ -2,7 +2,7 @@ require('dotenv')
 const { promise } = require("bcrypt/promises");
 const { response } = require('express');
 const nodemailer = require('nodemailer')
-const emailjs = require('emailjs')
+const emailjs = require('@emailjs/browser')
 module.exports = class Usuario {
     constructor(banco){
         this._banco = banco;
