@@ -176,10 +176,10 @@ module.exports = class Usuario {
     return operacaoAssincrona;
   }
 
-  async sendrec(email) {
+  async sendrec() {
     const operacaoAssincrona = new Promise((resolve, reject) => {
       const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
-      const to = email;
+      const to = this.getEmail();
       console.log(codigo);
       console.log(to);
       

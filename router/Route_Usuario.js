@@ -227,7 +227,7 @@ module.exports = function(app,banco){
                   
                   const usuario = new Usuario(banco)
                   usuario.setEmail(email)
-                  usuario.sendrec(email).then((resultadosBanco) => {
+                  usuario.sendrec().then((resultadosBanco) => {
                     const resposta = {
                         status: true,
                         msg: 'Executado com sucesso',
