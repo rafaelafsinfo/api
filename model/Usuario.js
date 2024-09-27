@@ -14,15 +14,6 @@ module.exports = class Usuario {
     this._senha = null;
     this._cidade = null;
     this._estado = null;
-    this.transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false, // or 'STARTTLS'
-      auth: {
-        user: "awstccsde@gmail.com",
-        pass: "Z26JirpBv1Hn",
-      },
-    });
   }
 
   async create() {
@@ -93,17 +84,14 @@ module.exports = class Usuario {
 
   async updatepass() {
     const operacaoAssincrona = new Promise((resolve, reject) => {
-      const id = this.getId();
-      const p_nome = this.getPNome();
-      const sobrenome = this.getSobrenome();
-      const username = this.getUsername();
-      const cidade = this.getCidade();
-      const estado = this.getEstado();
+      const email = this.getEmail();
+      const senha = md5(this.getSenha());
+      
 
-      const parametros = [p_nome, sobrenome, username, cidade, estado, id];
+      const parametros = [senha, email];
 
       const sql =
-        "update Usuario set p_nome=?,sobrenome=?,username=?,cidade=?,estado=? where id = ?";
+        "update Usuario set senha=? where email = ?";
 
       this._banco.query(sql, parametros, function (error, result) {
         if (error) {
@@ -172,55 +160,6 @@ module.exports = class Usuario {
           resolve(result);
         }
       });
-    });
-    return operacaoAssincrona;
-  }
-
-  async sendrec() {
-    const operacaoAssincrona = new Promise((resolve, reject) => {
-      const codigo = Math.floor(Math.random() * (99999 - 0 + 1)) + 0;
-      const to = this.getEmail();
-      console.log(codigo);
-      console.log(to);
-      
-      const data = {
-        service_id: "service_329817j",
-        template_id: "template-bn1nlsg",
-        user_id: "wWqMRT6VQkphMFS09",
-        template_params: {
-            to: to,
-            codigo: codigo,
-          },
-      };
-      fetch("https://api.emailjs.com/api/v1.0/email/send", {
-        method: "POST",
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-      }).then(function (response){
-        if (response.status == 200){
-            console.log("enviado" + response);
-            resolve(response);
-        }
-      }).catch(function (err){
-        console.error(err);
-      });
-      
-      /*emailjs
-        .send(
-          "service_329817j",
-          "template-bn1nlsg",
-          templateParams,
-          "wWqMRT6VQkphMFS09"
-        )
-        .then(
-          (response) => {
-            console.log("enviado" + response);
-            resolve(response);
-          },
-          (err) => {
-            console.error(err);
-          }
-        );*/
     });
     return operacaoAssincrona;
   }

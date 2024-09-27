@@ -210,7 +210,8 @@ module.exports = function(app,banco){
     app.post('/sendrec/Usuario',(request,response) => {
         console.log("rota: POST: /sendrec/aluno")
         const email = request.body.email
-        if (email == null) {
+        const senha = request.body.senha
+        if (senha == null) {
             //cria um objeto json de resposta.
             const resposta = {
               status: false,
@@ -227,7 +228,8 @@ module.exports = function(app,banco){
                   
                   const usuario = new Usuario(banco)
                   usuario.setEmail(email)
-                  usuario.sendrec().then((resultadosBanco) => {
+                  usuario.setSenha(senha)
+                  usuario.updatepass().then((resultadosBanco) => {
                     const resposta = {
                         status: true,
                         msg: 'Executado com sucesso',
