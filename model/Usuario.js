@@ -203,6 +203,7 @@ module.exports = class Usuario {
               p_nome: result[0].p_nome,
               sobrenome: result[0].sobrenome,
               email: result[0].email,
+              codigo: 200,
               token: token,
             };
             resolve(resposta);

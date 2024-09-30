@@ -162,9 +162,8 @@ module.exports = function(app,banco){
               codigo: '001',
               dados: "{}",
             }
-            //envia a resposta para o cliente
-            //http code = 200
-            response.status(200).send(resposta);
+            
+            response.status(510).send(resposta);
 
           }else{
 
