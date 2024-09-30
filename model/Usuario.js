@@ -1,8 +1,6 @@
 require("dotenv");
 const { promise } = require("bcrypt/promises");
 const { response } = require("express");
-const nodemailer = require("nodemailer");
-const emailjs = require("@emailjs/browser");
 module.exports = class Usuario {
   constructor(banco) {
     this._banco = banco;
@@ -172,7 +170,6 @@ module.exports = class Usuario {
     const operacaoAssincrona = new Promise((resolve, reject) => {
       const email = this.getEmail();
       const senha = md5(this.getSenha());
-      console.log(email, senha);
       const parametros = [email, senha];
       const sql = `SELECT COUNT(*) AS qtd, id,p_nome,sobrenome,email FROM Usuario WHERE email = ? AND senha = ?;`;
 
