@@ -147,7 +147,7 @@ module.exports = function(app,banco){
                 dados: erro
               }
               console.error(erro)
-              response.status(200).send(resposta)
+              response.status(404).send(resposta)
         })
     })
     app.post('/Login/Usuario',(request,response) => {
@@ -202,7 +202,7 @@ module.exports = function(app,banco){
             }
 
 
-            response.status(201).send(erro);
+            response.status(404).send(erro);
             });
         }
     })
@@ -244,7 +244,7 @@ module.exports = function(app,banco){
                         dados: erro
                       }
                       console.error(erro)
-                      response.status(200).send(resposta)
+                      response.status(404).send(resposta)
                 })
             
               } catch (err) {
@@ -278,7 +278,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(p_nome == ""){
             const resposta={
                 status: true,
@@ -286,7 +286,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(sobrenome == ""){
             const resposta={
                 status: true,
@@ -294,7 +294,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(username == ""){
             const resposta={
                 status: true,
@@ -302,7 +302,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(cidade == ""){
             const resposta={
                 status: true,
@@ -310,7 +310,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(estado == ""){
             const resposta={
                 status: true,
@@ -318,7 +318,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else{
             const usuario = new Usuario(banco)
             usuario.setId(id)
@@ -351,7 +351,7 @@ module.exports = function(app,banco){
                     dados: erro,
                   }
                   console.error(erro)
-                  response.status(200).send(resposta);
+                  response.status(500).send(resposta);
             })
         }
     })
@@ -371,7 +371,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(p_nome == ""){
             const resposta={
                 status: true,
@@ -379,7 +379,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(sobrenome == ""){
             const resposta={
                 status: true,
@@ -387,7 +387,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(username == ""){
             const resposta={
                 status: true,
@@ -395,7 +395,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(cidade == ""){
             const resposta={
                 status: true,
@@ -403,7 +403,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else if(estado == ""){
             const resposta={
                 status: true,
@@ -411,7 +411,7 @@ module.exports = function(app,banco){
                 codigo: '001',
                 dados: "{}"
             }
-            response.status(200).send(resposta);
+            response.status(404).send(resposta);
         }else{
             const usuario = new Usuario(banco)
             usuario.setId(id)
@@ -443,7 +443,7 @@ module.exports = function(app,banco){
                     dados: erro,
                   }
                   console.error(erro)
-                  response.status(200).send(resposta);
+                  response.status(500).send(resposta);
             })
         }
     })
@@ -473,7 +473,7 @@ module.exports = function(app,banco){
                 dados: erro,
                }
             console.error(erro)
-            response.status(200).send(resposta)
+            response.status(500).send(resposta)
         })
     })
 }
