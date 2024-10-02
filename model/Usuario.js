@@ -81,6 +81,7 @@ module.exports = class Usuario {
   }
 
   async updatepass() {
+    const md5 = require("md5");
     const operacaoAssincrona = new Promise((resolve, reject) => {
       const email = this.getEmail();
       const senha = md5(this.getSenha());
