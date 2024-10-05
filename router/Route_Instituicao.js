@@ -223,10 +223,10 @@ module.exports = function(app,banco){
           }else{
               try {
                   
-                  const usuario = new Usuario(banco)
-                  usuario.setEmail(email)
-                  usuario.setSenha(senha)
-                  usuario.updatepass().then((resultadosBanco) => {
+                  const instituicao = new Instituicao(banco)
+                  instituicao.setEmail(email)
+                  instituicao.setSenha(senha)
+                  instituicao.updatepass().then((resultadosBanco) => {
                     const resposta = {
                         status: true,
                         msg: 'Executado com sucesso',
