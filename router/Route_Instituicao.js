@@ -204,7 +204,61 @@ module.exports = function(app,banco){
         }
     })
 
+    app.post('/sendrec/Instituicao',(request,response) => {
+        console.log("rota: POST: /sendrec/aluno")
+        const email = request.body.email
+        const senha = request.body.senha
+        if (senha == null) {
+            //cria um objeto json de resposta.
+            const resposta = {
+              status: false,
+              msg: 'email não podem ser vazio',
+              codigo: '001',
+              dados: "{}",
+            }
+            //envia a resposta para o cliente
+            //http code = 200
+            response.status(200).send(resposta);
 
+          }else{
+              try {
+                  
+                  const usuario = new Usuario(banco)
+                  usuario.setEmail(email)
+                  usuario.setSenha(senha)
+                  usuario.updatepass().then((resultadosBanco) => {
+                    const resposta = {
+                        status: true,
+                        msg: 'Executado com sucesso',
+                        dados: resultadosBanco,
+                        codigo: '003'
+                    }
+                    response.status(200).send(resposta)
+                }).catch((erro) => {
+                    const resposta = {
+                        status: false,
+                        codigo: '004',
+                        msg: 'erro ao executar',
+                        dados: erro
+                      }
+                      console.error(erro)
+                      response.status(404).send(resposta)
+                })
+            
+              } catch (err) {
+            
+                const resposta = {
+                    status: false,
+                    codigo: '004',
+                    msg: 'Erro ao enviar email',
+                    dados: err
+                  }
+                  console.error(err)
+                  response.status(500).send(resposta)
+            
+              }
+        }
+    })
 
 
     app.get('/Instituicao',(request,response) => {

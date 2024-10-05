@@ -69,7 +69,7 @@ module.exports = class locais {
         return operacaoAssincrona;
     }
 
-    async update() {setrua
+    async update() {
         const operacaoAssincrona = new Promise((resolve, reject) => {
             const id = this.getId() 
             const Cep = this.getCep()

@@ -68,10 +68,10 @@ module.exports = class Usuario {
 
       this._banco.query(SQL, params, function (error, result) {
         if (error) {
-          console.log("reject => Usuario.create(): " + JSON.stringify(error));
+          console.log("reject => Usuario.Read(): " + JSON.stringify(error));
           reject(error);
         } else {
-          console.log("resolve => Usuario.create(): " + JSON.stringify(result));
+          console.log("resolve => Usuario.Read(): " + JSON.stringify(result));
           resolve(result);
         }
       });

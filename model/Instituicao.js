@@ -76,10 +76,10 @@ module.exports = class Instituicao {
 
             this._banco.query(SQL, params, function (error, result) {
                 if (error) {
-                    console.log("reject => Instituicao.create(): " + JSON.stringify(error))
+                    console.log("reject => Instituicao.read(): " + JSON.stringify(error))
                     reject(error);
                 } else {
-                    console.log("resolve => Instituicao.create(): " + JSON.stringify(result))
+                    console.log("resolve => Instituicao.read(): " + JSON.stringify(result))
                     resolve(result);
                 }
             });
@@ -128,37 +128,22 @@ module.exports = class Instituicao {
     async updatepass() {
         const md5 = require("md5");
         const operacaoAssincrona = new Promise((resolve, reject) => {
-            const Cnpj = this.getCnpj() 
-            const NomeInst = this.getNomeInst();
+            const Email = this.getEmail() 
             const Senha = md5(this.getSenha())
-            const Rua = this.getRua()
-            const numero = this.getNumero()
-            const bairro = this.getBairro()
-            const cidade = this.getCidade();
-            const estado = this.getEstado();
-            const cep = this.getCEP()
-            const descricao = this.getDescricao()
+            
 
             const parametros = [
-                NomeInst,
                 Senha,
-                Rua,
-                numero,
-                bairro,
-                cidade,
-                estado,
-                cep,
-                descricao,
-                Cnpj
+                Email
             ];
-            const sql = "update Instituicao set NomeInst=?,Senha=?,Rua=?,Numero=?,Bairro=?,Cidade=?,Estado=?,CEP=?,Descricao=? where Cnpj =?;";
+            const sql = "update Instituicao set Senha=? where Cnpj =?;";
 
             this._banco.query(sql, parametros, function (error, result) {
                 if (error) {
-                    console.log("reject => Instituicao.update(): " + JSON.stringify(error))
+                    console.log("reject => Instituicao.updatePass(): " + JSON.stringify(error))
                     reject(error);
                 } else {
-                    console.log("resolve => Instituicao.update(): " + JSON.stringify(result))
+                    console.log("resolve => Instituicao.updatePass(): " + JSON.stringify(result))
                     resolve(result);
                 }
             });
