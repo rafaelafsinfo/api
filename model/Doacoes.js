@@ -65,11 +65,10 @@ module.exports = class Doacoes {
 
         return operacaoAssincrona;
     }
-    async readInst() {
+    async readInst(Email) {
         
         const operacaoAssincrona = new Promise((resolve, reject) => {
             
-            const Email = this.getEmail();
             let params = [Email]
             let SQL = "";
 
